@@ -1,5 +1,6 @@
 const express = require("express");
 const Inventory = require("../models/Inventory");
+const { checkLowStock } = require("../services/stockAlertService");
 const router = express.Router();
 
 // Create a new inventory item (POST /inventory)
@@ -86,7 +87,8 @@ router.put("/:sku", async (req, res) => {
 		if (!updatedItem) {
 			return res.status(404).json({ message: "Item not found" });
 		}
-
+		console.log("Updated inventory item:", updatedItem); // Debugging log
+		await checkLowStock(updatedItem);
 		res.status(200).json({
 			message: "Item updated successfully",
 			item: updatedItem,

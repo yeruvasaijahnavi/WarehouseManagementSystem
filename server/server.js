@@ -2,7 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
 const inventoryRoutes = require("./routes/inventory");
-const orderRoutes = require("./routes/orders"); // Import the order routes
+const orderRoutes = require("./routes/orders");
+const alertRoutes = require("./routes/alerts"); // Add alert routes
+const { checkLowStock } = require("./services/stockAlertService"); // Import the service
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON
@@ -16,11 +18,12 @@ mongoose
 // Use the routes
 app.use("/auth", authRoutes);
 app.use("/inventory", inventoryRoutes);
-app.use("/orders", orderRoutes); // Add the order routes
+app.use("/orders", orderRoutes);
+app.use("/alerts", alertRoutes); // Add alert routes
 
 // Test route
 app.get("/", (req, res) => {
-	res.send("Polo! Warehouse Management System Backend is Running!");
+	res.send("Warehouse Management System Backend is Running!");
 });
 
 app.listen(process.env.PORT, () => {
