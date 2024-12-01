@@ -1,5 +1,6 @@
 const express = require("express");
 const Order = require("../models/Order");
+const OrderProcessing = require("../models/OrderProcessing");
 const { createLog } = require("../services/logService");
 const authorizeUser = require("../middleware/auth");
 const router = express.Router();
@@ -20,6 +21,15 @@ router.post("/", authorizeUser("admin"), async (req, res) => {
 		});
 
 		await newOrder.save();
+
+		// Create initial order processing entry
+		const newOrderProcessing = new OrderProcessing({
+			orderId: newOrder._id,
+			status: "received", // Initial status
+			staffId: req.user.userId, // Staff handling the order
+		});
+
+		await newOrderProcessing.save();
 
 		// Create an audit log for the new order
 		await createLog(
@@ -77,6 +87,93 @@ router.get("/:id", authorizeUser("staff"), async (req, res) => {
 		);
 
 		res.status(200).json(order);
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({
+			message: "Internal Server Error",
+			error: err.message,
+		});
+	}
+});
+
+// Update the status of an order (PUT /orders/:id/status)
+router.put("/:id/status", authorizeUser("staff"), async (req, res) => {
+	try {
+		const { status } = req.body;
+
+		// Validate status change
+		const validStatuses = [
+			"received",
+			"in progress",
+			"packed",
+			"shipped",
+			"delivered",
+			"canceled",
+		];
+		if (!validStatuses.includes(status)) {
+			return res.status(400).json({ message: "Invalid order status" });
+		}
+
+		const orderProcessing = await OrderProcessing.findOne({
+			orderId: req.params.id,
+		});
+		if (!orderProcessing) {
+			return res
+				.status(404)
+				.json({ message: "Order processing record not found" });
+		}
+
+		// Update the order processing status
+		orderProcessing.status = status;
+		if (
+			status === "shipped" ||
+			status === "delivered" ||
+			status === "canceled"
+		) {
+			orderProcessing.completionDate = Date.now();
+		}
+
+		await orderProcessing.save();
+
+		// Create an audit log for updating order processing status
+		await createLog(
+			"update",
+			orderProcessing._id,
+			req.user.userId,
+			`Updated status of order ${req.params.id} to ${status}`
+		);
+
+		res.status(200).json({
+			message: `Order status updated to ${status}`,
+			orderProcessing,
+		});
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({
+			message: "Internal Server Error",
+			error: err.message,
+		});
+	}
+});
+
+// Get the processing history of an order (GET /orders/:id/history)
+router.get("/:id/history", authorizeUser("staff"), async (req, res) => {
+	try {
+		const orderProcessingHistory = await OrderProcessing.find({
+			orderId: req.params.id,
+		})
+			.populate("staffId", "username") // Assuming 'staffId' is a user model with a 'username' field
+			.sort({ startDate: 1 }); // Sort by startDate to get processing timeline
+
+		if (!orderProcessingHistory.length) {
+			return res
+				.status(404)
+				.json({
+					message: "No processing history found for this order",
+				});
+		}
+
+		res.status(200).json(orderProcessingHistory);
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({
