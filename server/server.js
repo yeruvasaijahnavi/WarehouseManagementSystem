@@ -1,25 +1,24 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const authRoutes = require("./routes/auth");
+
 const app = express();
-const User = require("./models/User");
-const Inventory = require("./models/Inventory");
+app.use(express.json()); // Middleware to parse JSON
 
-// Middleware to parse JSON
-app.use(express.json());
-
-// Connect to MongoDB (without deprecated options)
+// Connect to MongoDB
 mongoose
 	.connect(process.env.MONGO_URI)
 	.then(() => console.log("Connected to MongoDB"))
 	.catch((err) => console.error("MongoDB connection error:", err));
+
+// Use auth routes
+app.use("/auth", authRoutes);
 
 // Test route
 app.get("/", (req, res) => {
 	res.send("Warehouse Management System Backend is Running!");
 });
 
-// Start the server
-const PORT = 3000;
-app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+	console.log(`Server is running on port ${process.env.PORT}`);
 });
