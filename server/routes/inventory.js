@@ -1,10 +1,12 @@
 const express = require("express");
 const Inventory = require("../models/Inventory");
 const { checkLowStock } = require("../services/stockAlertService");
+const { createLog } = require("../services/logService");
+const authorizeUser = require("../middleware/auth");
 const router = express.Router();
 
 // Create a new inventory item (POST /inventory)
-router.post("/", async (req, res) => {
+router.post("/", authorizeUser("admin"), async (req, res) => {
 	try {
 		const { sku, name, category, description, quantity, price, location } =
 			req.body;
@@ -28,6 +30,14 @@ router.post("/", async (req, res) => {
 		});
 
 		await newItem.save();
+		// Create an audit log for the new item
+		await createLog(
+			"add",
+			newItem._id,
+			req.user.userId,
+			`Added new item: ${name}`
+		);
+
 		res.status(201).json({
 			message: `Item "${name}" created successfully`,
 			item: newItem,
@@ -42,9 +52,16 @@ router.post("/", async (req, res) => {
 });
 
 // Get all inventory items (GET /inventory)
-router.get("/", async (req, res) => {
+router.get("/", authorizeUser("admin"), async (req, res) => {
 	try {
 		const items = await Inventory.find();
+		// Create an audit log for fetching all items
+		await createLog(
+			"fetch",
+			null,
+			req.user.userId,
+			"Fetched all inventory items"
+		);
 		res.status(200).json(items);
 	} catch (err) {
 		console.error(err);
@@ -56,12 +73,19 @@ router.get("/", async (req, res) => {
 });
 
 // Get an inventory item by its ID (GET /inventory/:sku)
-router.get("/:sku", async (req, res) => {
+router.get("/:sku", authorizeUser("admin"), async (req, res) => {
 	try {
 		const item = await Inventory.findOne({ sku: req.params.sku });
 		if (!item) {
 			return res.status(404).json({ message: "Item not found" });
 		}
+		// Create an audit log for fetching an item by SKU
+		await createLog(
+			"fetch",
+			item._id,
+			req.user.userId,
+			`Fetched item with SKU: ${req.params.sku}`
+		);
 		res.status(200).json(item);
 	} catch (err) {
 		console.error(err);
@@ -73,7 +97,7 @@ router.get("/:sku", async (req, res) => {
 });
 
 // Update an inventory item (PUT /inventory/:sku)
-router.put("/:sku", async (req, res) => {
+router.put("/:sku", authorizeUser("admin"), async (req, res) => {
 	try {
 		const { name, category, description, quantity, price, location } =
 			req.body;
@@ -89,6 +113,13 @@ router.put("/:sku", async (req, res) => {
 		}
 		console.log("Updated inventory item:", updatedItem); // Debugging log
 		await checkLowStock(updatedItem);
+		// Create an audit log for updating an item
+		await createLog(
+			"update",
+			updatedItem._id,
+			req.user.userId,
+			`Updated item with SKU: ${req.params.sku}`
+		);
 		res.status(200).json({
 			message: "Item updated successfully",
 			item: updatedItem,
@@ -103,7 +134,7 @@ router.put("/:sku", async (req, res) => {
 });
 
 // Delete an inventory item (DELETE /inventory/:sku)
-router.delete("/:sku", async (req, res) => {
+router.delete("/:sku", authorizeUser("admin"), async (req, res) => {
 	try {
 		const deletedItem = await Inventory.findOneAndDelete({
 			sku: req.params.sku,
@@ -111,6 +142,13 @@ router.delete("/:sku", async (req, res) => {
 		if (!deletedItem) {
 			return res.status(404).json({ message: "Item not found" });
 		}
+		// Create an audit log for deleting an item
+		await createLog(
+			"delete",
+			deletedItem._id,
+			req.user.userId,
+			`Deleted item with SKU: ${req.params.sku}`
+		);
 		res.status(200).json({ message: "Item deleted successfully" });
 	} catch (err) {
 		console.error(err);
