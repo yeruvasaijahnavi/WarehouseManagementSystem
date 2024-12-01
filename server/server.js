@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const User = require("./models/User");
+const Inventory = require("./models/Inventory");
 
 // Middleware to parse JSON
 app.use(express.json());
