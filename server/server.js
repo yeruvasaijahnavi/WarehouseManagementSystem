@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
+const inventoryRoutes = require("./routes/inventory");
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON
@@ -11,8 +12,8 @@ mongoose
 	.then(() => console.log("Connected to MongoDB"))
 	.catch((err) => console.error("MongoDB connection error:", err));
 
-// Use auth routes
 app.use("/auth", authRoutes);
+app.use("/inventory", inventoryRoutes);
 
 // Test route
 app.get("/", (req, res) => {
