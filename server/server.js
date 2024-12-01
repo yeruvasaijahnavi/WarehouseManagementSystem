@@ -4,6 +4,7 @@ const authRoutes = require("./routes/auth");
 const inventoryRoutes = require("./routes/inventory");
 const orderRoutes = require("./routes/orders");
 const alertRoutes = require("./routes/alerts"); // Add alert routes
+const staffRoutes = require("./routes/staff");
 const { checkLowStock } = require("./services/stockAlertService"); // Import the service
 
 const app = express();
@@ -20,7 +21,7 @@ app.use("/auth", authRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/orders", orderRoutes);
 app.use("/alerts", alertRoutes); // Add alert routes
-
+app.use("/staff", staffRoutes);
 // Test route
 app.get("/", (req, res) => {
 	res.send("Warehouse Management System Backend is Running!");
