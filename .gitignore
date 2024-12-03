@@ -1,6 +1,6 @@
 # userdefined
 roadmap.md
-
+.angular/
 
 # Ignore node_modules directory
 node_modules/
@@ -27,3 +27,4 @@ Thumbs.db
 .vscode/
 .idea/
 *.iml
+
