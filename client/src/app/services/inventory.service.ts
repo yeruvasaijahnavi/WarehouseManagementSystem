@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
 	providedIn: "root",
@@ -10,89 +10,26 @@ export class InventoryService {
 	constructor(private http: HttpClient) {}
 
 	getInventoryItems() {
-		const token = localStorage.getItem("token"); // Ensure the token is stored on login
-
-		if (!token) {
-			throw new Error("No token found");
-		}
-
-		const headers = new HttpHeaders().set(
-			"Authorization",
-			`Bearer ${token}`
-		);
-
-		return this.http.get<any[]>(this.baseUrl, { headers });
+		return this.http.get<any[]>(this.baseUrl);
 	}
 
 	getInventoryItemBySKU(sku: string) {
-		const token = localStorage.getItem("token");
-
-		if (!token) {
-			throw new Error("No token found");
-		}
-
-		const headers = new HttpHeaders().set(
-			"Authorization",
-			`Bearer ${token}`
-		);
-
-		return this.http.get<any>(`${this.baseUrl}/${sku}`, { headers });
+		return this.http.get<any>(`${this.baseUrl}/${sku}`);
 	}
 
 	addInventoryItem(item: any) {
-		const token = localStorage.getItem("token");
-
-		if (!token) {
-			throw new Error("No token found");
-		}
-
-		const headers = new HttpHeaders().set(
-			"Authorization",
-			`Bearer ${token}`
-		);
-
-		return this.http.post<any>(`${this.baseUrl}`, item, { headers });
+		return this.http.post<any>(`${this.baseUrl}`, item);
 	}
 
 	updateInventoryItem(sku: string, updatedItem: any) {
-		const token = localStorage.getItem("token");
-
-		if (!token) {
-			throw new Error("No token found");
-		}
-
-		const headers = new HttpHeaders().set(
-			"Authorization",
-			`Bearer ${token}`
-		);
-
-		return this.http.put<any>(`${this.baseUrl}/${sku}`, updatedItem, {
-			headers,
-		});
+		return this.http.put<any>(`${this.baseUrl}/${sku}`, updatedItem);
 	}
 
 	deleteInventoryItem(sku: string) {
-		const token = localStorage.getItem("token");
-
-		if (!token) {
-			throw new Error("No token found");
-		}
-
-		const headers = new HttpHeaders().set(
-			"Authorization",
-			`Bearer ${token}`
-		);
-
-		return this.http.delete<any>(`${this.baseUrl}/${sku}`, { headers });
+		return this.http.delete<any>(`${this.baseUrl}/${sku}`);
 	}
-	getInventoryReport() {
-		const token = localStorage.getItem("token");
-		if (!token) throw new Error("No token found");
 
-		const headers = new HttpHeaders().set(
-			"Authorization",
-			`Bearer ${token}`
-		);
-		return this.http.get<any>(`${this.baseUrl}/report`, { headers });
+	getInventoryReport() {
+		return this.http.get<any>(`${this.baseUrl}/report`);
 	}
 }

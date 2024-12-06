@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -11,15 +11,6 @@ export class AuditLogService {
 	constructor(private http: HttpClient) {}
 
 	getAuditLogs(): Observable<any[]> {
-		const token = localStorage.getItem("token");
-		if (!token) {
-			throw new Error("No token found");
-		}
-
-		const headers = new HttpHeaders().set(
-			"Authorization",
-			`Bearer ${token}`
-		);
-		return this.http.get<any[]>(this.baseUrl, { headers });
+		return this.http.get<any[]>(this.baseUrl);
 	}
 }

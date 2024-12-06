@@ -12,11 +12,12 @@ import {
 import { DropdownModule, SidebarModule } from "@coreui/angular";
 import { IconSetService } from "@coreui/icons-angular";
 import { routes } from "./app.routes";
-import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClient, withInterceptors } from "@angular/common/http";
+import { authInterceptor } from "./interceptor/auth.interceptor";
 
 export const appConfig: ApplicationConfig = {
 	providers: [
-		provideHttpClient(), // for api calss
+		provideHttpClient(withInterceptors([authInterceptor])), // for api calss
 		provideRouter(
 			routes,
 			withRouterConfig({
