@@ -37,4 +37,18 @@ export class OrderService {
 
 		return this.http.get<any>(`${this.baseUrl}/${orderId}`, { headers });
 	}
+	addOrder(order: any) {
+		const token = localStorage.getItem("token");
+
+		if (!token) {
+			throw new Error("No token found");
+		}
+
+		const headers = new HttpHeaders().set(
+			"Authorization",
+			`Bearer ${token}`
+		);
+
+		return this.http.post<any>(`${this.baseUrl}`, order, { headers });
+	}
 }

@@ -4,13 +4,18 @@ const OrderProcessing = require("../models/OrderProcessing");
 const { createLog } = require("../services/logService");
 const authorizeUser = require("../middleware/auth");
 const router = express.Router();
-
+const mongoose = require("mongoose");
 // Create a new order (POST /orders)
 router.post("/", authorizeUser("admin"), async (req, res) => {
 	try {
-		const { orderId, customerId, sku, quantity, shippingAddress } =
-			req.body;
+		const { customerId, sku, quantity, shippingAddress } = req.body;
 
+		const generateOrderId = () => {
+			const randomDigits = Math.floor(100 + Math.random() * 900); // Generates a random 3 digit number
+			return `O${randomDigits}`;
+		};
+
+		const orderId = generateOrderId();
 		// Create a new order
 		const newOrder = new Order({
 			orderId,
@@ -22,14 +27,14 @@ router.post("/", authorizeUser("admin"), async (req, res) => {
 
 		await newOrder.save();
 
-		// Create initial order processing entry
-		const newOrderProcessing = new OrderProcessing({
-			orderId: newOrder._id,
-			status: "received", // Initial status
-			staffId: req.user.userId, // Staff handling the order
-		});
+		// // Create initial order processing entry
+		// const newOrderProcessing = new OrderProcessing({
+		// 	orderId: newOrder._id,
+		// 	status: "received", // Initial status
+		// 	staffId: mongoose.Types.ObjectId(req.user.userId), // Staff handling the order
+		// });
 
-		await newOrderProcessing.save();
+		// await newOrderProcessing.save();
 
 		// Create an audit log for the new order
 		await createLog(
@@ -53,7 +58,7 @@ router.post("/", authorizeUser("admin"), async (req, res) => {
 });
 
 // Get all orders (GET /orders)
-router.get("/", authorizeUser("staff"), async (req, res) => {
+router.get("/", async (req, res) => {
 	try {
 		const orders = await Order.find();
 		res.status(200).json(orders);
@@ -67,7 +72,7 @@ router.get("/", authorizeUser("staff"), async (req, res) => {
 });
 
 // Get an order by ID (GET /orders/:id)
-router.get("/:id", authorizeUser("staff"), async (req, res) => {
+router.get("/:id", async (req, res) => {
 	try {
 		const order = await Order.findOne({ orderId: req.params.id });
 		if (!order) {

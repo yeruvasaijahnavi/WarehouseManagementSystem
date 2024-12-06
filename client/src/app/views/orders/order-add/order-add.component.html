@@ -1,0 +1,34 @@
+<h2>Add New Order</h2>
+<form (ngSubmit)="addOrder()">
+	<label for="customerId">Customer ID:</label>
+	<input [(ngModel)]="order.customerId" name="customerId" required />
+
+	<label for="sku">SKU:</label>
+	<input [(ngModel)]="order.sku" name="sku" required />
+
+	<label for="quantity">Quantity:</label>
+	<input
+		[(ngModel)]="order.quantity"
+		name="quantity"
+		type="number"
+		min="1"
+		required
+	/>
+
+	<label for="status">Status:</label>
+	<select [(ngModel)]="order.status" name="status">
+		<option value="pending">Pending</option>
+		<option value="in progress">In Progress</option>
+		<option value="shipped">Shipped</option>
+		<option value="delivered">Delivered</option>
+	</select>
+
+	<label for="shippingAddress">Shipping Address:</label>
+	<input
+		[(ngModel)]="order.shippingAddress"
+		name="shippingAddress"
+		required
+	/>
+
+	<button type="submit">Add Order</button>
+</form>

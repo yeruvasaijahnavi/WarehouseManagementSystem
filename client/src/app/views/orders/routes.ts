@@ -11,13 +11,13 @@ export const routes: Routes = [
 			title: "Order",
 		},
 	},
-	// {
-	// 	path: "add",
-	// 	loadComponent: () =>
-	// 		import("./order-add/order-add.component").then(
-	// 			(m) => m.OrderAddComponent
-	// 		),
-	// },
+	{
+		path: "add",
+		loadComponent: () =>
+			import("./order-add/order-add.component").then(
+				(m) => m.OrderAddComponent
+			),
+	},
 	{
 		path: "view/:id",
 		loadComponent: () =>
@@ -26,7 +26,7 @@ export const routes: Routes = [
 			),
 	},
 	// {
-	// 	path: "update/:sku",
+	// 	path: "update/:id",
 	// 	loadComponent: () =>
 	// 		import("./order-update/order-update.component").then(
 	// 			(m) => m.OrderUpdateComponent
