@@ -55,11 +55,13 @@ export class LoginComponent {
 		this.authService.login(this.loginObj).subscribe({
 			next: (response) => {
 				const token = response.token;
-				localStorage.setItem("token", token);
-
-				this.router.navigate(["/inventory"]);
+				if (token) {
+					localStorage.setItem("token", token);
+					this.router.navigate(["/inventory"]);
+				}
 			},
 			error: (error) => {
+				console.error(error);
 				alert(`Error: ${JSON.stringify(error.error)}`);
 			},
 			complete: () => {

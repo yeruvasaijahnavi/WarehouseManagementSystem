@@ -16,9 +16,19 @@ export class AuthService {
 		return this.http.post<any>(`${this.baseUrl}/login`, data);
 	}
 	logout() {
-		localStorage.removeItem("authUser");
+		localStorage.removeItem("token");
 	}
 	isLoggedIn() {
-		return localStorage.getItem("authUser") !== null;
+		return localStorage.getItem("token") !== null;
+	}
+	// auth.service.ts
+	getUser() {
+		const token = localStorage.getItem("token");
+		if (token) {
+			const decodedToken = JSON.parse(atob(token.split(".")[1])); // Decoding JWT
+			console.log(decodedToken);
+			return { username: decodedToken.username, role: decodedToken.role };
+		}
+		return { username: "", role: "" };
 	}
 }
