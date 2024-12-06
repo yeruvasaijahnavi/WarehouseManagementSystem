@@ -27,7 +27,6 @@ export class InventoryAddComponent implements OnInit {
 
 	ngOnInit(): void {}
 
-	// Method to add inventory item
 	addInventoryItem() {
 		this.inventoryService.addInventoryItem(this.newItem).subscribe(
 			(response) => {

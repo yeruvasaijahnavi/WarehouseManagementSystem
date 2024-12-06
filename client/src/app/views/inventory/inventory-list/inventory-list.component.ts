@@ -12,6 +12,7 @@ export class InventoryListComponent implements OnInit {
 	inventoryList: any[] = [];
 	inventoryService = inject(InventoryService);
 	router = inject(Router);
+	sku: string | undefined;
 	ngOnInit(): void {
 		this.inventoryService.getInventoryItems().subscribe((items: any) => {
 			this.inventoryList = items;
@@ -19,5 +20,10 @@ export class InventoryListComponent implements OnInit {
 	}
 	addInventory(): void {
 		this.router.navigate(["/inventory/add"]);
+	}
+
+	viewInventoryItem(sku: string): void {
+		console.log("Viewing item with sku:", sku);
+		this.router.navigate([`/inventory/view/${sku}`]);
 	}
 }

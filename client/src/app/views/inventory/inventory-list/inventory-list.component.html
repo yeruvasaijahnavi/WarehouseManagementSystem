@@ -9,6 +9,7 @@
 			<th>Quantity</th>
 			<th>Price</th>
 			<th>Location</th>
+			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -20,6 +21,7 @@
 			<td>{{ item.quantity }}</td>
 			<td>{{ item.price }}</td>
 			<td>{{ item.location }}</td>
+			<td><a (click)="viewInventoryItem(item.sku)">View</a></td>
 		</tr>
 	</tbody>
 </table>

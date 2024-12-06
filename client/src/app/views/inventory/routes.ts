@@ -18,4 +18,11 @@ export const routes: Routes = [
 				(m) => m.InventoryAddComponent
 			),
 	},
+	{
+		path: "view/:sku",
+		loadComponent: () =>
+			import("./inventory-view/inventory-view.component").then(
+				(m) => m.InventoryViewComponent
+			),
+	},
 ];

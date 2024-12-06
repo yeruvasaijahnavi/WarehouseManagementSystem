@@ -24,9 +24,20 @@ export class InventoryService {
 		return this.http.get<any[]>(this.baseUrl, { headers });
 	}
 
-	// getInventoryItemById(id: number): Observable<InventoryItem> {
-	// 	return this.http.get<InventoryItem>(`${this.apiUrl}/${id}`);
-	// }
+	getInventoryItemBySKU(sku: string) {
+		const token = localStorage.getItem("token");
+
+		if (!token) {
+			throw new Error("No token found");
+		}
+
+		const headers = new HttpHeaders().set(
+			"Authorization",
+			`Bearer ${token}`
+		);
+
+		return this.http.get<any>(`${this.baseUrl}/${sku}`, { headers });
+	}
 
 	addInventoryItem(item: any) {
 		const token = localStorage.getItem("token");

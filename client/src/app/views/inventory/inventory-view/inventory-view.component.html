@@ -1,0 +1,13 @@
+<div *ngIf="inventoryItem">
+	<h2>Inventory Item Details</h2>
+	<p><strong>SKU:</strong> {{ inventoryItem.sku }}</p>
+	<p><strong>Name:</strong> {{ inventoryItem.name }}</p>
+	<p><strong>Category:</strong> {{ inventoryItem.category }}</p>
+	<p><strong>Description:</strong> {{ inventoryItem.description }}</p>
+	<p><strong>Quantity:</strong> {{ inventoryItem.quantity }}</p>
+	<p><strong>Price:</strong> {{ inventoryItem.price }}</p>
+	<p><strong>Location:</strong> {{ inventoryItem.location }}</p>
+</div>
+<ng-template #errorBlock>
+	<p class="error">{{ errorMessage }}</p>
+</ng-template>
