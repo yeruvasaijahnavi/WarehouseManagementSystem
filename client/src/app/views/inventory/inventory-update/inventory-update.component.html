@@ -1,0 +1,56 @@
+<div *ngIf="inventoryItem; else errorBlock">
+	<h2>Update Inventory Item</h2>
+	<form (ngSubmit)="updateInventoryItem()">
+		<div>
+			<label for="name">Name:</label>
+			<input id="name" [(ngModel)]="inventoryItem.name" name="name" />
+		</div>
+		<div>
+			<label for="category">Category:</label>
+			<input
+				id="category"
+				[(ngModel)]="inventoryItem.category"
+				name="category"
+			/>
+		</div>
+		<div>
+			<label for="description">Description:</label>
+			<input
+				id="description"
+				[(ngModel)]="inventoryItem.description"
+				name="description"
+			/>
+		</div>
+		<div>
+			<label for="quantity">Quantity:</label>
+			<input
+				id="quantity"
+				type="number"
+				[(ngModel)]="inventoryItem.quantity"
+				name="quantity"
+			/>
+		</div>
+		<div>
+			<label for="price">Price:</label>
+			<input
+				id="price"
+				type="number"
+				[(ngModel)]="inventoryItem.price"
+				name="price"
+			/>
+		</div>
+		<div>
+			<label for="location">Location:</label>
+			<input
+				id="location"
+				[(ngModel)]="inventoryItem.location"
+				name="location"
+			/>
+		</div>
+		<button type="submit" class="btn btn-primary">Update</button>
+	</form>
+</div>
+
+<ng-template #errorBlock>
+	<p class="error">{{ errorMessage }}</p>
+</ng-template>

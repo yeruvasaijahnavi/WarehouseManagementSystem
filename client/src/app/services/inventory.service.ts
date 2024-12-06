@@ -54,12 +54,22 @@ export class InventoryService {
 		return this.http.post<any>(`${this.baseUrl}`, item, { headers });
 	}
 
-	// updateInventoryItem(
-	// 	id: number,
-	// 	item: InventoryItem
-	// ): Observable<InventoryItem> {
-	// 	return this.http.put<InventoryItem>(`${this.apiUrl}/${id}`, item);
-	// }
+	updateInventoryItem(sku: string, updatedItem: any) {
+		const token = localStorage.getItem("token");
+
+		if (!token) {
+			throw new Error("No token found");
+		}
+
+		const headers = new HttpHeaders().set(
+			"Authorization",
+			`Bearer ${token}`
+		);
+
+		return this.http.put<any>(`${this.baseUrl}/${sku}`, updatedItem, {
+			headers,
+		});
+	}
 
 	// deleteInventoryItem(id: number): Observable<void> {
 	// 	return this.http.delete<void>(`${this.apiUrl}/${id}`);

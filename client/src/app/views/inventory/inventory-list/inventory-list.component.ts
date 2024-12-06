@@ -26,4 +26,8 @@ export class InventoryListComponent implements OnInit {
 		console.log("Viewing item with sku:", sku);
 		this.router.navigate([`/inventory/view/${sku}`]);
 	}
+	updateInventoryItem(sku: string): void {
+		console.log("Navigating to update item with sku:", sku);
+		this.router.navigate([`/inventory/update/${sku}`]);
+	}
 }

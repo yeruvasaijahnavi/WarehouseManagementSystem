@@ -25,4 +25,11 @@ export const routes: Routes = [
 				(m) => m.InventoryViewComponent
 			),
 	},
+	{
+		path: "update/:sku",
+		loadComponent: () =>
+			import("./inventory-update/inventory-update.component").then(
+				(m) => m.InventoryUpdateComponent
+			),
+	},
 ];
