@@ -1,0 +1,35 @@
+<div class="container">
+	<h2>Audit Logs</h2>
+
+	<div *ngIf="errorMessage" class="error">
+		{{ errorMessage }}
+	</div>
+
+	<table
+		*ngIf="auditLogs.length > 0; else noLogs"
+		class="table table-bordered"
+	>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Action Type</th>
+				<th>Description</th>
+				<th>User</th>
+				<th>Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let log of auditLogs; index as i">
+				<td>{{ i + 1 }}</td>
+				<td>{{ log.actionType }}</td>
+				<td>{{ log.description }}</td>
+				<td>{{ log.userId }}</td>
+				<td>{{ log.actionDate | date : "medium" }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<ng-template #noLogs>
+		<p>No audit logs available.</p>
+	</ng-template>
+</div>
