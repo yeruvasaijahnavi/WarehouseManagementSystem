@@ -2,8 +2,8 @@
 roadmap.md
 
 # Ignore node_modules directory
-server/node_modules/
-# .angular/
+node_modules/
+.angular/
 # Ignore log files
 *.log
 
