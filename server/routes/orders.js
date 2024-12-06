@@ -160,48 +160,48 @@ router.get("/:id/history", authorizeUser("staff"), async (req, res) => {
 	}
 });
 
-// Update the status of an order (PUT /orders/:id)
-router.put("/:id", authorizeUser("staff"), async (req, res) => {
-	try {
-		const { status } = req.body;
+// // Update the status of an order (PUT /orders/:id)
+// router.put("/:id", authorizeUser("staff"), async (req, res) => {
+// 	try {
+// 		const { status } = req.body;
 
-		// Validate status change
-		if (
-			!["pending", "in progress", "shipped", "delivered"].includes(status)
-		) {
-			return res.status(400).json({ message: "Invalid order status" });
-		}
+// 		// Validate status change
+// 		if (
+// 			!["pending", "in progress", "shipped", "delivered"].includes(status)
+// 		) {
+// 			return res.status(400).json({ message: "Invalid order status" });
+// 		}
 
-		const updatedOrder = await Order.findOneAndUpdate(
-			{ orderId: req.params.id },
-			{ status },
-			{ new: true }
-		);
+// 		const updatedOrder = await Order.findOneAndUpdate(
+// 			{ orderId: req.params.id },
+// 			{ status },
+// 			{ new: true }
+// 		);
 
-		if (!updatedOrder) {
-			return res.status(404).json({ message: "Order not found" });
-		}
+// 		if (!updatedOrder) {
+// 			return res.status(404).json({ message: "Order not found" });
+// 		}
 
-		// Create an audit log for updating order status
-		await createLog(
-			"update",
-			updatedOrder._id,
-			req.user.userId,
-			`Updated status of order ID: ${req.params.id} to ${status}`
-		);
+// 		// Create an audit log for updating order status
+// 		await createLog(
+// 			"update",
+// 			updatedOrder._id,
+// 			req.user.userId,
+// 			`Updated status of order ID: ${req.params.id} to ${status}`
+// 		);
 
-		res.status(200).json({
-			message: "Order status updated",
-			order: updatedOrder,
-		});
-	} catch (err) {
-		console.error(err);
-		res.status(500).json({
-			message: "Internal Server Error",
-			error: err.message,
-		});
-	}
-});
+// 		res.status(200).json({
+// 			message: "Order status updated",
+// 			order: updatedOrder,
+// 		});
+// 	} catch (err) {
+// 		console.error(err);
+// 		res.status(500).json({
+// 			message: "Internal Server Error",
+// 			error: err.message,
+// 		});
+// 	}
+// });
 
 // Delete an order (DELETE /orders/:id)
 router.delete("/:id", authorizeUser("admin"), async (req, res) => {
