@@ -56,10 +56,6 @@ router.post("/", authorizeUser("admin"), async (req, res) => {
 router.get("/", authorizeUser("staff"), async (req, res) => {
 	try {
 		const orders = await Order.find();
-
-		// Create an audit log for fetching all orders
-		await createLog("fetch", null, req.user.userId, "Fetched all orders");
-
 		res.status(200).json(orders);
 	} catch (err) {
 		console.error(err);
@@ -77,14 +73,6 @@ router.get("/:id", authorizeUser("staff"), async (req, res) => {
 		if (!order) {
 			return res.status(404).json({ message: "Order not found" });
 		}
-
-		// Create an audit log for fetching an order by ID
-		await createLog(
-			"fetch",
-			order._id,
-			req.user.userId,
-			`Fetched order with ID: ${req.params.id}`
-		);
 
 		res.status(200).json(order);
 	} catch (err) {
@@ -166,11 +154,9 @@ router.get("/:id/history", authorizeUser("staff"), async (req, res) => {
 			.sort({ startDate: 1 }); // Sort by startDate to get processing timeline
 
 		if (!orderProcessingHistory.length) {
-			return res
-				.status(404)
-				.json({
-					message: "No processing history found for this order",
-				});
+			return res.status(404).json({
+				message: "No processing history found for this order",
+			});
 		}
 
 		res.status(200).json(orderProcessingHistory);

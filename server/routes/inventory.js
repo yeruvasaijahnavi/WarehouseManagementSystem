@@ -55,13 +55,7 @@ router.post("/", authorizeUser("admin"), async (req, res) => {
 router.get("/", authorizeUser("admin"), async (req, res) => {
 	try {
 		const items = await Inventory.find();
-		// Create an audit log for fetching all items
-		await createLog(
-			"fetch",
-			null,
-			req.user.userId,
-			"Fetched all inventory items"
-		);
+
 		res.status(200).json(items);
 	} catch (err) {
 		console.error(err);
@@ -79,13 +73,7 @@ router.get("/:sku", authorizeUser("admin"), async (req, res) => {
 		if (!item) {
 			return res.status(404).json({ message: "Item not found" });
 		}
-		// Create an audit log for fetching an item by SKU
-		await createLog(
-			"fetch",
-			item._id,
-			req.user.userId,
-			`Fetched item with SKU: ${req.params.sku}`
-		);
+
 		res.status(200).json(item);
 	} catch (err) {
 		console.error(err);
