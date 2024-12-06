@@ -1,0 +1,13 @@
+<h2>Order Details</h2>
+<div *ngIf="orderDetails">
+	<p><strong>Order ID:</strong> {{ orderDetails.orderId }}</p>
+	<p><strong>Customer ID:</strong> {{ orderDetails.customerId }}</p>
+	<p><strong>SKU:</strong> {{ orderDetails.sku }}</p>
+	<p><strong>Quantity:</strong> {{ orderDetails.quantity }}</p>
+	<p><strong>Status:</strong> {{ orderDetails.status }}</p>
+	<p><strong>Shipping Address:</strong> {{ orderDetails.shippingAddress }}</p>
+	<p>
+		<strong>Order Date:</strong>
+		{{ orderDetails.orderDate | date : "short" }}
+	</p>
+</div>

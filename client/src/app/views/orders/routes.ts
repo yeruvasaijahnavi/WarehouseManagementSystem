@@ -18,13 +18,13 @@ export const routes: Routes = [
 	// 			(m) => m.OrderAddComponent
 	// 		),
 	// },
-	// {
-	// 	path: "view/:sku",
-	// 	loadComponent: () =>
-	// 		import("./order-view/order-view.component").then(
-	// 			(m) => m.OrderViewComponent
-	// 		),
-	// },
+	{
+		path: "view/:id",
+		loadComponent: () =>
+			import("./order-view/order-view.component").then(
+				(m) => m.OrderViewComponent
+			),
+	},
 	// {
 	// 	path: "update/:sku",
 	// 	loadComponent: () =>
