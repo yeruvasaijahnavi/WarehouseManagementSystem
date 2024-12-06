@@ -25,13 +25,14 @@ export const routes: Routes = [
 				(m) => m.OrderViewComponent
 			),
 	},
-	// {
-	// 	path: "update/:id",
-	// 	loadComponent: () =>
-	// 		import("./order-update/order-update.component").then(
-	// 			(m) => m.OrderUpdateComponent
-	// 		),
-	// },
+	{
+		path: "update-status/:id",
+		loadComponent: () =>
+			import("./order-status-update/order-status-update.component").then(
+				(m) => m.OrderStatusUpdateComponent
+			),
+	},
+
 	// {
 	// 	path: "delete/:sku",
 	// 	loadComponent: () =>

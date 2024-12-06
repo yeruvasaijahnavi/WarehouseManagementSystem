@@ -1,0 +1,18 @@
+<div *ngIf="orderId; else errorBlock">
+	<h2>Update Order Status</h2>
+	<form (ngSubmit)="updateOrderStatus()">
+		<div>
+			<label for="status">Select Status:</label>
+			<select id="status" [(ngModel)]="status" name="status">
+				<option *ngFor="let status of validStatuses" [value]="status">
+					{{ status }}
+				</option>
+			</select>
+		</div>
+		<button type="submit" class="btn btn-primary">Update Status</button>
+	</form>
+</div>
+
+<ng-template #errorBlock>
+	<p class="error">{{ errorMessage }}</p>
+</ng-template>

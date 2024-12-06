@@ -51,4 +51,23 @@ export class OrderService {
 
 		return this.http.post<any>(`${this.baseUrl}`, order, { headers });
 	}
+	// Update order status
+	updateOrderStatus(orderId: string, status: string) {
+		const token = localStorage.getItem("token");
+
+		if (!token) {
+			throw new Error("No token found");
+		}
+
+		const headers = new HttpHeaders().set(
+			"Authorization",
+			`Bearer ${token}`
+		);
+
+		return this.http.put<any>(
+			`${this.baseUrl}/${orderId}/status`,
+			{ status },
+			{ headers }
+		);
+	}
 }

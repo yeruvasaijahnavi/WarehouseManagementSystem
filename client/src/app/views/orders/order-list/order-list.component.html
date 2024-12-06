@@ -26,6 +26,15 @@
 			<td>{{ order.orderDate | date : "short" }}</td>
 			<td>
 				<a (click)="viewOrder(order.orderId)">View</a>
+				<a
+					(click)="
+						router.navigate([
+							'/orders/update-status',
+							order.orderId
+						])
+					"
+					>Update Status</a
+				>
 			</td>
 		</tr>
 	</tbody>

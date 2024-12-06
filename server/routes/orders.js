@@ -96,49 +96,35 @@ router.put("/:id/status", authorizeUser("staff"), async (req, res) => {
 
 		// Validate status change
 		const validStatuses = [
-			"received",
+			"pending",
 			"in progress",
-			"packed",
 			"shipped",
 			"delivered",
-			"canceled",
 		];
 		if (!validStatuses.includes(status)) {
 			return res.status(400).json({ message: "Invalid order status" });
 		}
 
-		const orderProcessing = await OrderProcessing.findOne({
-			orderId: req.params.id,
-		});
-		if (!orderProcessing) {
-			return res
-				.status(404)
-				.json({ message: "Order processing record not found" });
+		const order = await Order.findOne({ orderId: req.params.id });
+		if (!order) {
+			return res.status(404).json({ message: "Order not found" });
 		}
 
-		// Update the order processing status
-		orderProcessing.status = status;
-		if (
-			status === "shipped" ||
-			status === "delivered" ||
-			status === "canceled"
-		) {
-			orderProcessing.completionDate = Date.now();
-		}
+		// Update the order status
+		order.status = status;
+		await order.save();
 
-		await orderProcessing.save();
-
-		// Create an audit log for updating order processing status
+		// Create an audit log for updating order status
 		await createLog(
 			"update",
-			orderProcessing._id,
+			order._id,
 			req.user.userId,
 			`Updated status of order ${req.params.id} to ${status}`
 		);
 
 		res.status(200).json({
 			message: `Order status updated to ${status}`,
-			orderProcessing,
+			order,
 		});
 	} catch (err) {
 		console.error(err);
