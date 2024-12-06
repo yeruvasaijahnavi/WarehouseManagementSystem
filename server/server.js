@@ -6,10 +6,11 @@ const orderRoutes = require("./routes/orders");
 const alertRoutes = require("./routes/alerts"); // Add alert routes
 const staffRoutes = require("./routes/staff");
 const logRoutes = require("./routes/logs"); // Add log routes
+const cors = require("cors");
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON
-
+app.use(cors({ origin: "http://localhost:4200" }));
 // Connect to MongoDB
 mongoose
 	.connect(process.env.MONGO_URI)
