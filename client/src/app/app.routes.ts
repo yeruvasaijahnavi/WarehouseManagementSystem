@@ -25,6 +25,11 @@ export const routes: Routes = [
 					import("./views/inventory/routes").then((m) => m.routes),
 			},
 			{
+				path: "orders",
+				loadChildren: () =>
+					import("./views/orders/routes").then((m) => m.routes),
+			},
+			{
 				path: "theme",
 				loadChildren: () =>
 					import("./views/theme/routes").then((m) => m.routes),
