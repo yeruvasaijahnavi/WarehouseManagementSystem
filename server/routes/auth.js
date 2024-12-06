@@ -4,7 +4,7 @@ const router = express.Router();
 
 // Register a new user
 router.post("/register", async (req, res) => {
-	const { userId, username, password, email, role } = req.body;
+	const { username, password, email, role } = req.body;
 
 	try {
 		// Check if user already exists
@@ -12,6 +12,13 @@ router.post("/register", async (req, res) => {
 		if (existingUser) {
 			return res.status(400).json({ message: "User already exists!" });
 		}
+
+		const generateUserId = () => {
+			const randomDigits = Math.floor(100 + Math.random() * 900); // Generates a random 3 digit number
+			return `U${randomDigits}`;
+		};
+
+		const userId = generateUserId();
 
 		// Create a new user
 		const newUser = new User({
