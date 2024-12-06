@@ -12,6 +12,25 @@
 								<p class="text-body-secondary">
 									Sign In to your account
 								</p>
+								<!-- Display error alert if login fails -->
+								<c-alert
+									*ngIf="errorMessage"
+									color="danger"
+									class="d-flex align-items-center"
+								>
+									<svg
+										class="bi flex-shrink-0 me-2"
+										width="24"
+										height="24"
+										role="img"
+										aria-label="Info:"
+									>
+										<use
+											xlink:href="#exclamation-triangle-fill"
+										/>
+									</svg>
+									<div>{{ errorMessage }}</div>
+								</c-alert>
 								<c-input-group class="mb-3">
 									<span cInputGroupText>
 										<svg cIcon name="cilUser"></svg>
@@ -22,8 +41,19 @@
 										name="username"
 										cFormControl
 										placeholder="Username"
+										required
 									/>
 								</c-input-group>
+								<div
+									*ngIf="
+										loginObj.username.touched &&
+										loginObj.username.invalid
+									"
+									class="text-danger"
+								>
+									Username is required.
+								</div>
+
 								<c-input-group class="mb-4">
 									<span cInputGroupText>
 										<svg cIcon name="cilLockLocked"></svg>
@@ -35,8 +65,18 @@
 										name="password"
 										placeholder="Password"
 										type="password"
+										required
 									/>
 								</c-input-group>
+								<div
+									*ngIf="
+										loginObj.password.touched &&
+										loginObj.password.invalid
+									"
+									class="text-danger"
+								>
+									Password is required.
+								</div>
 
 								<c-row>
 									<c-col xs="6">

@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { NgStyle } from "@angular/common";
+import { CommonModule, NgStyle } from "@angular/common";
 import { IconDirective } from "@coreui/icons-angular";
 import {
 	ContainerComponent,
@@ -14,6 +14,7 @@ import {
 	InputGroupTextDirective,
 	FormControlDirective,
 	ButtonDirective,
+	AlertComponent,
 } from "@coreui/angular";
 import { FormsModule } from "@angular/forms";
 import { AuthService } from "../../../services/auth.service";
@@ -39,6 +40,8 @@ import { Router } from "@angular/router";
 		ButtonDirective,
 		NgStyle,
 		FormsModule,
+		AlertComponent,
+		CommonModule,
 	],
 })
 export class LoginComponent {
@@ -47,11 +50,12 @@ export class LoginComponent {
 		password: "",
 	};
 
+	errorMessage: string = ""; // Variable to hold the error message
+
 	authService = inject(AuthService);
 	router = inject(Router);
 
 	onSubmit() {
-		// debugger;
 		this.authService.login(this.loginObj).subscribe({
 			next: (response) => {
 				const token = response.token;
@@ -62,10 +66,13 @@ export class LoginComponent {
 			},
 			error: (error) => {
 				console.error(error);
-				alert(`Error: ${JSON.stringify(error.error)}`);
+				// Show error message in the alert
+				this.errorMessage = `Login failed: ${
+					error.error.message || "Invalid credentials"
+				}`;
 			},
 			complete: () => {
-				console.log("Login request successful");
+				console.log("Login request complete");
 			},
 		});
 	}
