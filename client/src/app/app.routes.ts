@@ -20,6 +20,11 @@ export const routes: Routes = [
 					import("./views/dashboard/routes").then((m) => m.routes),
 			},
 			{
+				path: "inventory",
+				loadChildren: () =>
+					import("./views/inventory/routes").then((m) => m.routes),
+			},
+			{
 				path: "theme",
 				loadChildren: () =>
 					import("./views/theme/routes").then((m) => m.routes),

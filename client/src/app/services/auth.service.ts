@@ -13,11 +13,7 @@ export class AuthService {
 		return this.http.post(`${this.baseUrl}/register`, data);
 	}
 	login(data: any) {
-		return this.http.post(`${this.baseUrl}/login`, data).pipe(
-			tap((result) => {
-				localStorage.setItem("authUser", JSON.stringify(result));
-			})
-		);
+		return this.http.post<any>(`${this.baseUrl}/login`, data);
 	}
 	logout() {
 		localStorage.removeItem("authUser");

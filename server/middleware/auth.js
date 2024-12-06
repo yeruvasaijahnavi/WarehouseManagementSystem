@@ -30,7 +30,9 @@ function authorizeUser(requiredRole) {
 			next();
 		} catch (err) {
 			console.error("Authorization error:", err);
-			res.status(403).json({ message: "Invalid or expired token" });
+			res.status(403).json({
+				message: `Invalid or expired token ${token}	`,
+			});
 		}
 	};
 }

@@ -51,9 +51,13 @@ export class LoginComponent {
 	router = inject(Router);
 
 	onSubmit() {
+		debugger;
 		this.authService.login(this.loginObj).subscribe({
-			next: (result) => {
-				this.router.navigate(["/dashboard"]);
+			next: (response) => {
+				const token = response.token;
+				localStorage.setItem("token", token);
+
+				this.router.navigate(["/inventory"]);
 			},
 			error: (error) => {
 				alert(`Error: ${JSON.stringify(error.error)}`);

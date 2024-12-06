@@ -1,0 +1,25 @@
+<button class="btn btn-primary" (click)="addInventory()">Add Item</button>
+<table>
+	<thead>
+		<tr>
+			<th>SKU</th>
+			<th>Name</th>
+			<th>Category</th>
+			<th>Description</th>
+			<th>Quantity</th>
+			<th>Price</th>
+			<th>Location</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let item of inventoryList">
+			<td>{{ item.sku }}</td>
+			<td>{{ item.name }}</td>
+			<td>{{ item.category }}</td>
+			<td>{{ item.description }}</td>
+			<td>{{ item.quantity }}</td>
+			<td>{{ item.price }}</td>
+			<td>{{ item.location }}</td>
+		</tr>
+	</tbody>
+</table>
