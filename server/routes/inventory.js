@@ -5,23 +5,6 @@ const { createLog } = require("../services/logService");
 const authorizeUser = require("../middleware/auth");
 const router = express.Router();
 
-router.get("/valuation", async (req, res) => {
-	try {
-		const items = await Inventory.find();
-		const totalValue = items.reduce(
-			(sum, item) => sum + item.quantity * item.price,
-			0
-		);
-		res.status(200).json({ totalValue, items });
-	} catch (err) {
-		console.error(err);
-		res.status(500).json({
-			message: "Internal Server Error",
-			error: err.message,
-		});
-	}
-});
-
 // Get detailed COGS and inventory value reports
 router.get("/report", async (req, res) => {
 	try {
