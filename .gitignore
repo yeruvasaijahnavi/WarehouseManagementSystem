@@ -1,10 +1,9 @@
 # userdefined
 roadmap.md
-.angular/
 
 # Ignore node_modules directory
-node_modules/
-.angular/
+server/node_modules/
+# .angular/
 # Ignore log files
 *.log
 
@@ -24,7 +23,7 @@ build/
 Thumbs.db
 
 # Ignore IDE specific files
-.vscode/
+# .vscode/
 .idea/
 *.iml
 
