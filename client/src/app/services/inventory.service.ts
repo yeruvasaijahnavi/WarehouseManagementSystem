@@ -71,7 +71,18 @@ export class InventoryService {
 		});
 	}
 
-	// deleteInventoryItem(id: number): Observable<void> {
-	// 	return this.http.delete<void>(`${this.apiUrl}/${id}`);
-	// }
+	deleteInventoryItem(sku: string) {
+		const token = localStorage.getItem("token");
+
+		if (!token) {
+			throw new Error("No token found");
+		}
+
+		const headers = new HttpHeaders().set(
+			"Authorization",
+			`Bearer ${token}`
+		);
+
+		return this.http.delete<any>(`${this.baseUrl}/${sku}`, { headers });
+	}
 }

@@ -32,4 +32,11 @@ export const routes: Routes = [
 				(m) => m.InventoryUpdateComponent
 			),
 	},
+	{
+		path: "delete/:sku",
+		loadComponent: () =>
+			import("./inventory-delete/inventory-delete.component").then(
+				(m) => m.InventoryDeleteComponent
+			),
+	},
 ];

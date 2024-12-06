@@ -9,8 +9,7 @@
 			<th>Quantity</th>
 			<th>Price</th>
 			<th>Location</th>
-			<th>View Item</th>
-			<th>Update Item</th>
+			<th>Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,9 +23,8 @@
 			<td>{{ item.location }}</td>
 			<td>
 				<a (click)="viewInventoryItem(item.sku)">View</a>
-			</td>
-			<td>
 				<a (click)="updateInventoryItem(item.sku)">Update</a>
+				<a (click)="deleteInventoryItem(item.sku)">Delete</a>
 			</td>
 		</tr>
 	</tbody>

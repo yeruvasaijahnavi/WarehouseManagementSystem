@@ -1,0 +1,21 @@
+<div *ngIf="inventoryItem; else errorBlock">
+	<h2>Delete Inventory Item</h2>
+	<p>Are you sure you want to delete the following item?</p>
+	<ul>
+		<li><strong>SKU:</strong> {{ inventoryItem.sku }}</li>
+		<li><strong>Name:</strong> {{ inventoryItem.name }}</li>
+		<li><strong>Category:</strong> {{ inventoryItem.category }}</li>
+		<li><strong>Description:</strong> {{ inventoryItem.description }}</li>
+		<li><strong>Quantity:</strong> {{ inventoryItem.quantity }}</li>
+		<li><strong>Price:</strong> {{ inventoryItem.price }}</li>
+		<li><strong>Location:</strong> {{ inventoryItem.location }}</li>
+	</ul>
+	<button class="btn btn-danger" (click)="deleteInventoryItem()">
+		Delete
+	</button>
+	<button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+</div>
+
+<ng-template #errorBlock>
+	<p class="error">{{ errorMessage }}</p>
+</ng-template>

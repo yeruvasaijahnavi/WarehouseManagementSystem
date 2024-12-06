@@ -30,4 +30,8 @@ export class InventoryListComponent implements OnInit {
 		console.log("Navigating to update item with sku:", sku);
 		this.router.navigate([`/inventory/update/${sku}`]);
 	}
+	deleteInventoryItem(sku: string): void {
+		console.log("Navigating to delete item with sku:", sku);
+		this.router.navigate([`/inventory/delete/${sku}`]);
+	}
 }
