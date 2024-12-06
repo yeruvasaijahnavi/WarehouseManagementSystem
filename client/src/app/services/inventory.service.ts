@@ -85,4 +85,14 @@ export class InventoryService {
 
 		return this.http.delete<any>(`${this.baseUrl}/${sku}`, { headers });
 	}
+	getInventoryReport() {
+		const token = localStorage.getItem("token");
+		if (!token) throw new Error("No token found");
+
+		const headers = new HttpHeaders().set(
+			"Authorization",
+			`Bearer ${token}`
+		);
+		return this.http.get<any>(`${this.baseUrl}/report`, { headers });
+	}
 }

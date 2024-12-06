@@ -39,4 +39,11 @@ export const routes: Routes = [
 				(m) => m.InventoryDeleteComponent
 			),
 	},
+	{
+		path: "report",
+		loadComponent: () =>
+			import("./inventory-report/inventory-report.component").then(
+				(m) => m.InventoryReportComponent
+			),
+	},
 ];

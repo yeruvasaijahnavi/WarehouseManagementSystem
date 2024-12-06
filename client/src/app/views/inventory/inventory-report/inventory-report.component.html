@@ -1,0 +1,33 @@
+<div class="container">
+	<h2>Inventory Valuation Report</h2>
+
+	<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+	<div *ngIf="report.length > 0; else noData">
+		<h3>Total Inventory Value: ₹{{ totalValue }}</h3>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Item Name</th>
+					<th>Stock Level</th>
+					<th>Unit Price</th>
+					<th>Total Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of report; index as i">
+					<td>{{ i + 1 }}</td>
+					<td>{{ item.itemName }}</td>
+					<td>{{ item.stockLevel }}</td>
+					<td>₹{{ item.unitPrice }}</td>
+					<td>₹{{ item.totalValue }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<ng-template #noData>
+		<p>No inventory data available.</p>
+	</ng-template>
+</div>
