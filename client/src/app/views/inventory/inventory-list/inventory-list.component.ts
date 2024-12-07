@@ -2,9 +2,11 @@ import { Component, inject, OnInit } from "@angular/core";
 import { InventoryService } from "../../../services/inventory.service";
 import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
+import { IconDirective } from "@coreui/icons-angular";
+import { TableModule, UtilitiesModule } from "@coreui/angular";
 @Component({
 	selector: "app-inventory-list",
-	imports: [CommonModule],
+	imports: [CommonModule, TableModule, UtilitiesModule, IconDirective],
 	templateUrl: "./inventory-list.component.html",
 	styleUrl: "./inventory-list.component.scss",
 })

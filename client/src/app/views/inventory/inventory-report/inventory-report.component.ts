@@ -2,13 +2,14 @@ import { Component, OnInit, inject } from "@angular/core";
 import { InventoryService } from "../../../services/inventory.service";
 import { CommonModule } from "@angular/common";
 import { InventoryDashboardComponent } from "../../dashboard/inventory-dashboard/inventory-dashboard.component";
+import { TableModule } from "@coreui/angular";
 
 @Component({
 	selector: "app-inventory-report",
 	templateUrl: "./inventory-report.component.html",
 	styleUrls: ["./inventory-report.component.scss"],
 	standalone: true,
-	imports: [CommonModule, InventoryDashboardComponent],
+	imports: [CommonModule, InventoryDashboardComponent, TableModule],
 })
 export class InventoryReportComponent implements OnInit {
 	totalValue: number = 0;
