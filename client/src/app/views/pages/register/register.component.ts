@@ -12,10 +12,12 @@ import {
 	InputGroupTextDirective,
 	FormControlDirective,
 	ButtonDirective,
+	AlertComponent,
 } from "@coreui/angular";
 import { FormsModule } from "@angular/forms";
 import { AuthService } from "src/app/services/auth.service";
 import { Router } from "@angular/router";
+import { CommonModule } from "@angular/common";
 
 @Component({
 	selector: "app-register",
@@ -35,6 +37,8 @@ import { Router } from "@angular/router";
 		FormControlDirective,
 		ButtonDirective,
 		FormsModule,
+		CommonModule,
+		AlertComponent,
 	],
 })
 export class RegisterComponent {
@@ -45,17 +49,23 @@ export class RegisterComponent {
 		role: "",
 	};
 
+	errorMessage: string = ""; // To store the error message
+
 	authService = inject(AuthService);
 	router = inject(Router);
 
 	onSubmit() {
+		debugger;
 		this.authService.signup(this.registerObj).subscribe({
 			next: (response) => {
 				alert("Account created successfully!");
 				this.router.navigate(["/login"]); // Redirect to login after successful registration
 			},
 			error: (error) => {
-				alert(`Error: ${JSON.stringify(error.error)}`);
+				// Set the error message to display in the alert
+				this.errorMessage =
+					error.error?.message ||
+					"An error occurred during registration.";
 			},
 			complete: () => {
 				console.log("Registration request successful");

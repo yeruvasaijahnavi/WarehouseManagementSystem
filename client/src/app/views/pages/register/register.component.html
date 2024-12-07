@@ -11,6 +11,28 @@
 							<p class="text-body-secondary">
 								Create your account
 							</p>
+
+							<!-- Error alert -->
+							<c-alert
+								*ngIf="errorMessage"
+								color="danger"
+								class="d-flex align-items-center"
+							>
+								<svg
+									class="bi flex-shrink-0 me-2"
+									width="24"
+									height="24"
+									role="img"
+									aria-label="Error:"
+								>
+									<use
+										xlink:href="#exclamation-triangle-fill"
+									/>
+								</svg>
+								<div>{{ errorMessage }}</div>
+							</c-alert>
+
+							<!-- Username Input -->
 							<c-input-group class="mb-3">
 								<span cInputGroupText>
 									<svg cIcon name="cilUser"></svg>
@@ -23,6 +45,8 @@
 									placeholder="Username"
 								/>
 							</c-input-group>
+
+							<!-- Email Input -->
 							<c-input-group class="mb-3">
 								<span cInputGroupText>&#64;</span>
 								<input
@@ -33,6 +57,8 @@
 									placeholder="Email"
 								/>
 							</c-input-group>
+
+							<!-- Password Input -->
 							<c-input-group class="mb-3">
 								<span cInputGroupText>
 									<svg cIcon name="cilLockLocked"></svg>
@@ -46,6 +72,8 @@
 									type="password"
 								/>
 							</c-input-group>
+
+							<!-- Role Select -->
 							<c-input-group class="mb-4">
 								<span cInputGroupText>
 									<svg cIcon name="cilSettings"></svg>
@@ -61,9 +89,10 @@
 									</option>
 									<option value="admin">Admin</option>
 									<option value="staff">Staff</option>
-									<!-- <option value="Customer">Customer</option> -->
 								</select>
 							</c-input-group>
+
+							<!-- Submit Button -->
 							<div class="d-grid">
 								<button cButton color="success" type="submit">
 									Create Account
