@@ -1,0 +1,32 @@
+<h2>Staff List</h2>
+
+<button class="btn btn-primary" (click)="router.navigate(['/staff/add'])">
+	Add Staff Member
+</button>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Staff ID</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Role</th>
+			<th>Shift</th>
+			<th>Status</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let staff of staffList">
+			<td>{{ staff.staffId }}</td>
+			<td>{{ staff.name }}</td>
+			<td>{{ staff.email }}</td>
+			<td>{{ staff.role }}</td>
+			<td>{{ staff.shift }}</td>
+			<td>{{ staff.status }}</td>
+			<td>
+				<a (click)="viewStaffDetails(staff.staffId)">View</a>
+			</td>
+		</tr>
+	</tbody>
+</table>

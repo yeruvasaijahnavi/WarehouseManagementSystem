@@ -30,6 +30,11 @@ export const routes: Routes = [
 					import("./views/orders/routes").then((m) => m.routes),
 			},
 			{
+				path: "staff",
+				loadChildren: () =>
+					import("./views/staff/routes").then((m) => m.routes),
+			},
+			{
 				path: "alerts",
 				loadChildren: () =>
 					import("./views/stock-alerts/routes").then((m) => m.routes),
