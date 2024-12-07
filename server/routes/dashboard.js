@@ -23,4 +23,23 @@ router.get(
 	}
 );
 
+router.get(
+	"/inventory-total-quantity",
+	authorizeUser("admin"),
+	async (req, res) => {
+		try {
+			const data = await Inventory.aggregate([
+				{ $group: { _id: null, totalQuantity: { $sum: "$quantity" } } },
+			]);
+			res.json(data);
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({
+				message: "Internal Server Error",
+				error: err.message,
+			});
+		}
+	}
+);
+
 module.exports = router;

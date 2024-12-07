@@ -194,7 +194,8 @@ export class DashboardComponent implements OnInit {
 		trafficRadio: new FormControl("Month"),
 	});
 
-	public totalInventoryValue: number | null = null; // To store the total value
+	public totalInventoryValue: number | null = null;
+	public totalInventoryQuantity: number | null = null;
 	public loading = true; // For a loading indicator
 	icons = { cilInbox };
 	constructor(private dashboardService: DashboardService) {}
@@ -202,6 +203,7 @@ export class DashboardComponent implements OnInit {
 		this.initCharts();
 		this.updateChartOnColorModeChange();
 		this.fetchInventoryTotalValue();
+		this.fetchInventoryTotalQuantity();
 	}
 	fetchInventoryTotalValue(): void {
 		this.dashboardService.getInventoryTotalValue().subscribe({
@@ -226,6 +228,20 @@ export class DashboardComponent implements OnInit {
 		});
 	}
 
+	fetchInventoryTotalQuantity(): void {
+		this.dashboardService.getInventoryTotalQuantity().subscribe({
+			next: (data: any) => {
+				if (data && data.length > 0) {
+					this.totalInventoryQuantity = data[0].totalQuantity;
+				} else {
+					this.totalInventoryQuantity = 0;
+				}
+			},
+			error: (err) => {
+				console.error("Error fetching inventory total quantity:", err);
+			},
+		});
+	}
 	initCharts(): void {
 		this.mainChart = this.#chartsData.mainChart;
 	}

@@ -13,6 +13,10 @@ export class DashboardService {
 	getInventoryTotalValue(): Observable<{ totalValue: number }> {
 		return this.http.get<any>(`${this.baseUrl}/inventory-total-value`);
 	}
+
+	getInventoryTotalQuantity(): Observable<{ totalQuantity: number }> {
+		return this.http.get<any>(`${this.baseUrl}/inventory-total-quantity`);
+	}
 	//   getInventoryValueByCategory(): Observable<any> {
 	//     return this.http.get(`${this.baseUrl}/inventory-value-by-category`);
 	//   }
