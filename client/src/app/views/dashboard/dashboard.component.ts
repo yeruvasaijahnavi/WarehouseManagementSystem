@@ -46,7 +46,6 @@ import {
 } from "@coreui/angular";
 
 import { cilInbox } from "@coreui/icons";
-import { InventoryAddComponent } from "../inventory/inventory-add/inventory-add.component";
 
 interface IUser {
 	name: string;
@@ -66,7 +65,6 @@ interface IUser {
 	templateUrl: "dashboard.component.html",
 	styleUrls: ["dashboard.component.scss"],
 	imports: [
-		WidgetsDropdownComponent,
 		TextColorDirective,
 		CardComponent,
 		CardBodyComponent,

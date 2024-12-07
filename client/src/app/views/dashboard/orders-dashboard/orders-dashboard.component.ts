@@ -6,11 +6,13 @@ import { ChartjsModule } from "@coreui/angular-chartjs";
 import {
 	ColComponent,
 	DropdownModule,
+	GridModule,
 	ProgressModule,
 	RowComponent,
 	SharedModule,
 	WidgetModule,
 } from "@coreui/angular";
+import { CommonModule } from "@angular/common";
 
 @Component({
 	selector: "app-order-dashboard",
@@ -26,6 +28,8 @@ import {
 		IconModule,
 		ColComponent,
 		RowComponent,
+		GridModule,
+		CommonModule,
 	],
 })
 export class OrdersDashboardComponent implements OnInit {
@@ -49,6 +53,8 @@ export class OrdersDashboardComponent implements OnInit {
 			},
 		],
 	};
+	isPieChartDataLoaded: boolean = false;
+
 	constructor(private orderDashboardService: OrderDashboardService) {}
 
 	ngOnInit(): void {
@@ -63,12 +69,18 @@ export class OrdersDashboardComponent implements OnInit {
 				this.pieChartData.datasets[0].data = data.map(
 					(item) => item.count
 				);
-				console.log("pie chart data", this.pieChartData);
+				this.isPieChartDataLoaded = true; // Data is now loaded
+				console.log(
+					"Pie chart data loaded:",
+					this.pieChartData.labels,
+					this.pieChartData.datasets[0].data
+				);
 			},
 			error: (err) =>
 				console.error("Error fetching order status distribution:", err),
 		});
 	}
+
 	fetchTotalOrders(): void {
 		this.orderDashboardService.getTotalOrders().subscribe({
 			next: (data) => {
