@@ -1,31 +1,28 @@
-<c-col xl="4" lg="6" md="6" sm="12">
-	<c-widget-stat-f
-		[title]="'Total Orders'"
-		color="warning"
-		padding
-		[value]="totalOrders !== null ? totalOrders : 'Loading...'"
-	>
-		<ng-template cTemplateId="widgetIconTemplate">
-			<svg cIcon name="cilInbox" size="xl" width="32"></svg>
-		</ng-template>
-	</c-widget-stat-f>
-</c-col>
+<c-row class="my-4">
+	<c-col xl="6" lg="6" md="6" sm="12" class="margin-class">
+		<c-widget-stat-f
+			[title]="'Total Orders'"
+			color="warning"
+			padding
+			[value]="totalOrders !== null ? totalOrders : 'Loading...'"
+		>
+			<ng-template cTemplateId="widgetIconTemplate">
+				<svg cIcon name="cilInbox" size="xl" width="32"></svg>
+			</ng-template>
+		</c-widget-stat-f>
+	</c-col>
 
-<!-- Distinct Customers Widget -->
-<c-col xl="10" lg="6" md="6" sm="12">
-	<c-widget-stat-f
-		[title]="'Distinct Customers'"
-		color="info"
-		padding
-		[value]="customerCount !== null ? customerCount : 'Loading...'"
-	>
-		<ng-template cTemplateId="widgetIconTemplate">
-			<svg cIcon name="cilPeople" size="xl" width="32"></svg>
-		</ng-template>
-	</c-widget-stat-f>
-</c-col>
-
-<!-- Doughnut Chart -->
-<c-col>
-	<c-chart [data]="pieChartData" type="doughnut"></c-chart>
-</c-col>
+	<!-- Distinct Customers Widget -->
+	<c-col xl="6" lg="6" md="6" sm="12" class="margin-class">
+		<c-widget-stat-f
+			[title]="'Distinct Customers'"
+			color="info"
+			padding
+			[value]="customerCount !== null ? customerCount : 'Loading...'"
+		>
+			<ng-template cTemplateId="widgetIconTemplate">
+				<svg cIcon name="cilPeople" size="xl" width="32"></svg>
+			</ng-template>
+		</c-widget-stat-f>
+	</c-col>
+</c-row>

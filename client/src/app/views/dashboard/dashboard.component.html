@@ -1,41 +1,7 @@
-<app-widgets-dropdown />
-<app-order-dashboard></app-order-dashboard>
+<!-- <app-widgets-dropdown /> -->
 <app-alerts-dashboard></app-alerts-dashboard>
-<c-row class="g-4">
-	<c-col xl="3" md="6" sm="6">
-		<c-widget-stat-f
-			[title]="'Total Inventory Value'"
-			color="success"
-			padding
-			[value]="
-				totalInventoryValue
-					? '₹ ' + (totalInventoryValue | number : '1.0-0')
-					: 'Loading...'
-			"
-		>
-			<ng-template cTemplateId="widgetIconTemplate">
-				<svg cIcon name="cilInbox" size="xl" width="24"></svg>
-			</ng-template>
-		</c-widget-stat-f>
-	</c-col>
-	<!-- Total Quantity of Inventory -->
-	<c-col xl="3" md="6" sm="6">
-		<c-widget-stat-f
-			[title]="'Total Quantity of Inventory'"
-			color="primary"
-			padding
-			[value]="
-				totalInventoryQuantity
-					? totalInventoryQuantity + ' items'
-					: 'Loading...'
-			"
-		>
-			<ng-template cTemplateId="widgetIconTemplate">
-				<svg cIcon name="cilInbox" size="xl" width="24"></svg>
-			</ng-template>
-		</c-widget-stat-f>
-	</c-col>
-</c-row>
+<app-order-dashboard></app-order-dashboard>
+<app-inventory-dashboard></app-inventory-dashboard>
 
 <c-card class="my-4">
 	<c-card-body>

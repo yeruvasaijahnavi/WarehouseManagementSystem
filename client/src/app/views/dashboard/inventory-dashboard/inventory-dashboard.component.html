@@ -1,0 +1,33 @@
+<c-row class="my-4">
+	<c-col xl="6" md="6" sm="6">
+		<c-widget-stat-f
+			[title]="'Total Inventory Value'"
+			color="success"
+			padding
+			[value]="
+				totalInventoryValue ? '₹ ' + totalInventoryValue : 'Loading...'
+			"
+		>
+			<ng-template cTemplateId="widgetIconTemplate">
+				<svg cIcon name="cilInbox" size="xl" width="24"></svg>
+			</ng-template>
+		</c-widget-stat-f>
+	</c-col>
+	<!-- Total Quantity of Inventory -->
+	<c-col xl="6" md="6" sm="6">
+		<c-widget-stat-f
+			[title]="'Total Quantity of Inventory'"
+			color="primary"
+			padding
+			[value]="
+				totalInventoryQuantity
+					? totalInventoryQuantity + ' items'
+					: 'Loading...'
+			"
+		>
+			<ng-template cTemplateId="widgetIconTemplate">
+				<svg cIcon name="cilInbox" size="xl" width="24"></svg>
+			</ng-template>
+		</c-widget-stat-f>
+	</c-col>
+</c-row>

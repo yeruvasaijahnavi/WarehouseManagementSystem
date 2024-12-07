@@ -1,6 +1,7 @@
 import { CommonModule, DOCUMENT, NgStyle } from "@angular/common";
 import { OrdersDashboardComponent } from "./orders-dashboard/orders-dashboard.component";
 import { AlertsDashboardComponent } from "./alerts-dashboard/alerts-dashboard.component";
+import { InventoryDashboardComponent } from "./inventory-dashboard/inventory-dashboard.component";
 import {
 	Component,
 	DestroyRef,
@@ -23,6 +24,7 @@ import {
 	CardHeaderComponent,
 	ColComponent,
 	FormCheckLabelDirective,
+	GridModule,
 	GutterDirective,
 	ProgressBarDirective,
 	ProgressComponent,
@@ -31,12 +33,8 @@ import {
 	TextColorDirective,
 } from "@coreui/angular";
 import { ChartjsComponent, ChartjsModule } from "@coreui/angular-chartjs";
-import {
-	IconDirective,
-	IconModule,
-	IconSetService,
-} from "@coreui/icons-angular";
-import { DashboardService } from "../../services/dashboard.service";
+import { IconDirective, IconModule } from "@coreui/icons-angular";
+
 import { WidgetsBrandComponent } from "../widgets/widgets-brand/widgets-brand.component";
 import { WidgetsDropdownComponent } from "../widgets/widgets-dropdown/widgets-dropdown.component";
 import { DashboardChartsData, IChartProps } from "./dashboard-charts-data";
@@ -48,6 +46,7 @@ import {
 } from "@coreui/angular";
 
 import { cilInbox } from "@coreui/icons";
+import { InventoryAddComponent } from "../inventory/inventory-add/inventory-add.component";
 
 interface IUser {
 	name: string;
@@ -97,6 +96,8 @@ interface IUser {
 		CommonModule,
 		OrdersDashboardComponent,
 		AlertsDashboardComponent,
+		InventoryDashboardComponent,
+		GridModule,
 	],
 })
 export class DashboardComponent implements OnInit {
@@ -202,50 +203,12 @@ export class DashboardComponent implements OnInit {
 	public totalInventoryQuantity: number | null = null;
 	public loading = true; // For a loading indicator
 	icons = { cilInbox };
-	constructor(private dashboardService: DashboardService) {}
+	constructor() {}
 	ngOnInit(): void {
 		this.initCharts();
 		this.updateChartOnColorModeChange();
-		this.fetchInventoryTotalValue();
-		this.fetchInventoryTotalQuantity();
-	}
-	fetchInventoryTotalValue(): void {
-		this.dashboardService.getInventoryTotalValue().subscribe({
-			next: (data: any) => {
-				// Access the first element of the array and then get totalValue
-				if (data && data.length > 0) {
-					this.totalInventoryValue = data[0].totalValue;
-					console.log(
-						"Total inventory value:",
-						this.totalInventoryValue
-					);
-				} else {
-					console.log("No data found");
-					this.totalInventoryValue = 0; // Handle no data case
-				}
-				this.loading = false;
-			},
-			error: (err) => {
-				console.error("Error fetching inventory total value:", err);
-				this.loading = false;
-			},
-		});
 	}
 
-	fetchInventoryTotalQuantity(): void {
-		this.dashboardService.getInventoryTotalQuantity().subscribe({
-			next: (data: any) => {
-				if (data && data.length > 0) {
-					this.totalInventoryQuantity = data[0].totalQuantity;
-				} else {
-					this.totalInventoryQuantity = 0;
-				}
-			},
-			error: (err) => {
-				console.error("Error fetching inventory total quantity:", err);
-			},
-		});
-	}
 	initCharts(): void {
 		this.mainChart = this.#chartsData.mainChart;
 	}
