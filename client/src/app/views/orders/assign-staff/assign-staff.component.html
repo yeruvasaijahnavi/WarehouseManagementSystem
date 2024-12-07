@@ -1,0 +1,8 @@
+<h2>Assign Staff</h2>
+<label for="staff">Select Staff:</label>
+<select id="staff" [(ngModel)]="selectedStaffId">
+	<option *ngFor="let staff of staffList" [value]="staff._id">
+		{{ staff.name }} ({{ staff.role }})
+	</option>
+</select>
+<button (click)="assignStaff()">Assign</button>

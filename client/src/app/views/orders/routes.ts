@@ -26,6 +26,13 @@ export const routes: Routes = [
 			),
 	},
 	{
+		path: "assign-staff/:id",
+		loadComponent: () =>
+			import("./assign-staff/assign-staff.component").then(
+				(m) => m.AssignStaffComponent
+			),
+	},
+	{
 		path: "update-status/:id",
 		loadComponent: () =>
 			import("./order-status-update/order-status-update.component").then(

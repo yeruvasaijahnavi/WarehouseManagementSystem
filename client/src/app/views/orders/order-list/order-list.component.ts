@@ -25,4 +25,7 @@ export class OrderListComponent implements OnInit {
 		console.log("Viewing order with ID:", orderId);
 		this.router.navigate([`/orders/view/${orderId}`]);
 	}
+	assignStaff(orderId: string): void {
+		this.router.navigate([`/orders/assign-staff/${orderId}`]);
+	}
 }

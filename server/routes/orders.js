@@ -6,6 +6,29 @@ const authorizeUser = require("../middleware/auth");
 const router = express.Router();
 const mongoose = require("mongoose");
 
+router.put("/:orderId/assign-staff", async (req, res) => {
+	try {
+		const { staffId } = req.body;
+		const { orderId } = req.params;
+		if (!orderId) {
+			return res.status(400).json({ message: "Order ID is missing" });
+		}
+		console.log("Assignings staff", staffId, req.params.orderId);
+		const order = await Order.findOneAndUpdate(
+			{ orderId: req.params.orderId },
+			{ assignedStaff: staffId },
+			{ new: true }
+		).populate("assignedStaff", "name role email");
+		res.status(200).json(order);
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({
+			message: "Internal Server Error",
+			error: err.message,
+		});
+	}
+});
+
 // Create a new order (POST /orders)
 router.post("/", authorizeUser("admin"), async (req, res) => {
 	try {

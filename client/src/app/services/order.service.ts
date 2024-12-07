@@ -26,4 +26,10 @@ export class OrderService {
 			status,
 		});
 	}
+
+	assignStaff(orderId: string, staffId: string) {
+		return this.http.put<any>(`${this.baseUrl}/${orderId}/assign-staff`, {
+			staffId,
+		});
+	}
 }
