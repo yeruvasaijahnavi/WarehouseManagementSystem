@@ -23,8 +23,12 @@
 			<td>{{ item.location }}</td>
 			<td>
 				<a (click)="viewInventoryItem(item.sku)">View</a>
-				<a (click)="updateInventoryItem(item.sku)">Update</a>
-				<a (click)="deleteInventoryItem(item.sku)">Delete</a>
+				<a *ngIf="isAdmin()" (click)="updateInventoryItem(item.sku)"
+					>Update</a
+				>
+				<a *ngIf="isAdmin()" (click)="deleteInventoryItem(item.sku)"
+					>Delete</a
+				>
 			</td>
 		</tr>
 	</tbody>

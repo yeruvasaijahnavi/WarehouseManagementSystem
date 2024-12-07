@@ -77,7 +77,7 @@ router.post("/", authorizeUser("admin"), async (req, res) => {
 });
 
 // Get all inventory items (GET /inventory)
-router.get("/", authorizeUser("admin"), async (req, res) => {
+router.get("/", async (req, res) => {
 	try {
 		const items = await Inventory.find();
 
@@ -92,7 +92,7 @@ router.get("/", authorizeUser("admin"), async (req, res) => {
 });
 
 // Get an inventory item by its ID (GET /inventory/:sku)
-router.get("/:sku", authorizeUser("admin"), async (req, res) => {
+router.get("/:sku", async (req, res) => {
 	try {
 		const item = await Inventory.findOne({ sku: req.params.sku });
 		if (!item) {

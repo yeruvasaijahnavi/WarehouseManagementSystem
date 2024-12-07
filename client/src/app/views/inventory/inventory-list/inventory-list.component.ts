@@ -34,4 +34,8 @@ export class InventoryListComponent implements OnInit {
 		console.log("Navigating to delete item with sku:", sku);
 		this.router.navigate([`/inventory/delete/${sku}`]);
 	}
+	isAdmin(): boolean {
+		const userRole = localStorage.getItem("role"); // Retrieve the role from localStorage
+		return userRole === "admin"; // Check if the role is admin
+	}
 }

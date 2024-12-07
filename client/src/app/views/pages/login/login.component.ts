@@ -53,6 +53,7 @@ export class LoginComponent {
 	errorMessage: string = ""; // Variable to hold the error message
 
 	authService = inject(AuthService);
+
 	router = inject(Router);
 
 	onSubmit() {
@@ -61,12 +62,16 @@ export class LoginComponent {
 				const token = response.token;
 				if (token) {
 					localStorage.setItem("token", token);
+
+					const user = this.authService.getUser();
+					console.log("login user:", user);
+					localStorage.setItem("role", user.role);
+
 					this.router.navigate(["/inventory"]);
 				}
 			},
 			error: (error) => {
 				console.error(error);
-				// Show error message in the alert
 				this.errorMessage = `Login failed: ${
 					error.error.message || "Invalid credentials"
 				}`;
