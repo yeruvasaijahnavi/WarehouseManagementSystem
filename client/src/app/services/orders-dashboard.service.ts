@@ -21,4 +21,12 @@ export class OrderDashboardService {
 			`${this.baseUrl}/orders-distinct-customers`
 		);
 	}
+
+	getOrderStatusDistribution(): Observable<
+		Array<{ status: string; count: number }>
+	> {
+		return this.http.get<Array<{ status: string; count: number }>>(
+			`${this.baseUrl}/orders-status-distribution`
+		);
+	}
 }
