@@ -1,0 +1,16 @@
+<c-row>
+	<c-col xl="3" md="6" sm="6">
+		<c-widget-stat-f
+			[title]="'Unresolved Alerts'"
+			color="danger"
+			padding
+			[value]="
+				unresolvedAlerts !== null ? unresolvedAlerts : 'Loading...'
+			"
+		>
+			<ng-template cTemplateId="widgetIconTemplate">
+				<svg cIcon name="cilBell" size="xl" width="24"></svg>
+			</ng-template>
+		</c-widget-stat-f>
+	</c-col>
+</c-row>

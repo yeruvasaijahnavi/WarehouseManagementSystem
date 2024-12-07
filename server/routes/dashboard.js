@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Inventory = require("../models/Inventory");
 const Order = require("../models/Order");
+const StockAlert = require("../models/StockAlert");
 const authorizeUser = require("../middleware/auth");
 
 router.get(
@@ -74,5 +75,51 @@ router.get(
 		}
 	}
 );
+router.get(
+	"/orders-status-distribution",
+	authorizeUser("admin"),
+	async (req, res) => {
+		try {
+			const distribution = await Order.aggregate([
+				{
+					$group: {
+						_id: "$status",
+						count: { $sum: 1 },
+					},
+				},
+				{
+					$project: {
+						status: "$_id",
+						count: 1,
+						_id: 0,
+					},
+				},
+			]);
 
+			res.json(distribution);
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({
+				message: "Internal Server Error",
+				error: err.message,
+			});
+		}
+	}
+);
+
+// stocks unresolved
+router.get("/alerts-unresolved", authorizeUser("admin"), async (req, res) => {
+	try {
+		const unresolvedCount = await StockAlert.countDocuments({
+			status: "active",
+		});
+		res.json({ unresolvedCount });
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({
+			message: "Internal Server Error",
+			error: err.message,
+		});
+	}
+});
 module.exports = router;
