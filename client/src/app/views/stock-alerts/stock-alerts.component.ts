@@ -10,12 +10,7 @@ import { TableModule } from "@coreui/angular";
 	templateUrl: "./stock-alerts.component.html",
 	styleUrls: ["./stock-alerts.component.scss"],
 	standalone: true,
-	imports: [
-		CommonModule,
-		AlertsDashboardComponent,
-		TableModule,
-		IconDirective,
-	],
+	imports: [CommonModule, AlertsDashboardComponent, TableModule],
 })
 export class StockAlertsComponent implements OnInit {
 	alerts: any[] = [];
