@@ -1,8 +1,22 @@
-<h2>Assign Staff</h2>
-<label for="staff">Select Staff:</label>
-<select id="staff" [(ngModel)]="selectedStaffId">
-	<option *ngFor="let staff of staffList" [value]="staff._id">
-		{{ staff.name }} ({{ staff.role }})
-	</option>
-</select>
-<button (click)="assignStaff()">Assign</button>
+<div class="container mt-4">
+	<h2 class="mb-4">Assign Staff</h2>
+	<form (ngSubmit)="assignStaff()" class="row g-3">
+		<div class="col-md-6 form-floating">
+			<select
+				id="staff"
+				class="form-select"
+				[(ngModel)]="selectedStaffId"
+				name="staff"
+				required
+			>
+				<option *ngFor="let staff of staffList" [value]="staff._id">
+					{{ staff.name }} ({{ staff.role }})
+				</option>
+			</select>
+			<label for="staff">Select Staff</label>
+		</div>
+		<div class="col-12">
+			<button type="submit" class="btn btn-primary">Assign</button>
+		</div>
+	</form>
+</div>

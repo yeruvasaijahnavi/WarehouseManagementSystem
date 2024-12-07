@@ -1,34 +1,73 @@
-<h2>Add New Order</h2>
-<form (ngSubmit)="addOrder()">
-	<label for="customerId">Customer ID:</label>
-	<input [(ngModel)]="order.customerId" name="customerId" required />
+<div class="container mt-4">
+	<h2 class="mb-4">Add New Order</h2>
+	<form (ngSubmit)="addOrder()" class="row g-3">
+		<div class="col-md-6 form-floating">
+			<input
+				id="customerId"
+				type="text"
+				class="form-control"
+				[(ngModel)]="order.customerId"
+				name="customerId"
+				required
+			/>
+			<label for="customerId">Customer ID</label>
+		</div>
 
-	<label for="sku">SKU:</label>
-	<input [(ngModel)]="order.sku" name="sku" required />
+		<div class="col-md-6 form-floating">
+			<input
+				id="sku"
+				type="text"
+				class="form-control"
+				[(ngModel)]="order.sku"
+				name="sku"
+				required
+			/>
+			<label for="sku">SKU</label>
+		</div>
 
-	<label for="quantity">Quantity:</label>
-	<input
-		[(ngModel)]="order.quantity"
-		name="quantity"
-		type="number"
-		min="1"
-		required
-	/>
+		<div class="col-md-4 form-floating">
+			<input
+				id="quantity"
+				type="number"
+				class="form-control"
+				[(ngModel)]="order.quantity"
+				name="quantity"
+				min="1"
+				required
+			/>
+			<label for="quantity">Quantity</label>
+		</div>
 
-	<label for="status">Status:</label>
-	<select [(ngModel)]="order.status" name="status">
-		<option value="pending">Pending</option>
-		<option value="in progress">In Progress</option>
-		<option value="shipped">Shipped</option>
-		<option value="delivered">Delivered</option>
-	</select>
+		<div class="col-md-4 form-floating">
+			<select
+				id="status"
+				class="form-select"
+				[(ngModel)]="order.status"
+				name="status"
+				required
+			>
+				<option value="pending">Pending</option>
+				<option value="in progress">In Progress</option>
+				<option value="shipped">Shipped</option>
+				<option value="delivered">Delivered</option>
+			</select>
+			<label for="status">Status</label>
+		</div>
 
-	<label for="shippingAddress">Shipping Address:</label>
-	<input
-		[(ngModel)]="order.shippingAddress"
-		name="shippingAddress"
-		required
-	/>
+		<div class="col-md-4 form-floating">
+			<input
+				id="shippingAddress"
+				type="text"
+				class="form-control"
+				[(ngModel)]="order.shippingAddress"
+				name="shippingAddress"
+				required
+			/>
+			<label for="shippingAddress">Shipping Address</label>
+		</div>
 
-	<button type="submit">Add Order</button>
-</form>
+		<div class="col-12">
+			<button type="submit" class="btn btn-primary">Add Order</button>
+		</div>
+	</form>
+</div>

@@ -1,56 +1,78 @@
-<div *ngIf="inventoryItem; else errorBlock">
-	<h2>Update Inventory Item</h2>
-	<form (ngSubmit)="updateInventoryItem()">
-		<div>
-			<label for="name">Name:</label>
-			<input id="name" [(ngModel)]="inventoryItem.name" name="name" />
+<div *ngIf="inventoryItem; else errorBlock" class="container mt-4">
+	<h2 class="mb-4">Update Inventory Item</h2>
+	<form (ngSubmit)="updateInventoryItem()" class="row g-3">
+		<div class="col-md-6 form-floating">
+			<input
+				id="name"
+				type="text"
+				class="form-control"
+				[(ngModel)]="inventoryItem.name"
+				name="name"
+				required
+			/>
+			<label for="name">Name</label>
 		</div>
-		<div>
-			<label for="category">Category:</label>
+		<div class="col-md-6 form-floating">
 			<input
 				id="category"
+				type="text"
+				class="form-control"
 				[(ngModel)]="inventoryItem.category"
 				name="category"
+				required
 			/>
+			<label for="category">Category</label>
 		</div>
-		<div>
-			<label for="description">Description:</label>
+		<div class="col-12 form-floating">
 			<input
 				id="description"
+				type="text"
+				class="form-control"
 				[(ngModel)]="inventoryItem.description"
 				name="description"
+				required
 			/>
+			<label for="description">Description</label>
 		</div>
-		<div>
-			<label for="quantity">Quantity:</label>
+		<div class="col-md-4 form-floating">
 			<input
 				id="quantity"
 				type="number"
+				class="form-control"
 				[(ngModel)]="inventoryItem.quantity"
 				name="quantity"
+				required
 			/>
+			<label for="quantity">Quantity</label>
 		</div>
-		<div>
-			<label for="price">Price:</label>
+		<div class="col-md-4 form-floating">
 			<input
 				id="price"
 				type="number"
+				class="form-control"
 				[(ngModel)]="inventoryItem.price"
 				name="price"
+				required
 			/>
+			<label for="price">Price</label>
 		</div>
-		<div>
-			<label for="location">Location:</label>
+		<div class="col-md-4 form-floating">
 			<input
 				id="location"
+				type="text"
+				class="form-control"
 				[(ngModel)]="inventoryItem.location"
 				name="location"
+				required
 			/>
+			<label for="location">Location</label>
 		</div>
-		<button type="submit" class="btn btn-primary">Update</button>
+		<div class="col-12">
+			<button type="submit" class="btn btn-primary">Update</button>
+		</div>
 	</form>
 </div>
 
 <ng-template #errorBlock>
-	<p class="error">{{ errorMessage }}</p>
+	<p class="error text-danger mt-3">{{ errorMessage }}</p>
 </ng-template>
