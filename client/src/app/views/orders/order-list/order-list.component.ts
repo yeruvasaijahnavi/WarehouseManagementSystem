@@ -3,12 +3,19 @@ import { OrderService } from "../../../services/order.service";
 import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
 import { OrdersDashboardComponent } from "../../dashboard/orders-dashboard/orders-dashboard.component";
+import { TableModule } from "@coreui/angular";
+import { IconDirective } from "@coreui/icons-angular";
 
 @Component({
 	selector: "app-order-list",
 	templateUrl: "./order-list.component.html",
 	styleUrls: ["./order-list.component.scss"],
-	imports: [CommonModule, OrdersDashboardComponent],
+	imports: [
+		CommonModule,
+		OrdersDashboardComponent,
+		TableModule,
+		IconDirective,
+	],
 })
 export class OrderListComponent implements OnInit {
 	orderList: any[] = [];

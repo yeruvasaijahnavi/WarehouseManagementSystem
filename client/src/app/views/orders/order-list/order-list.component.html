@@ -1,52 +1,77 @@
-<h2>Order List</h2>
+<div class="container">
+	<h2>Order List</h2>
 
-<button class="btn btn-primary" (click)="router.navigate(['/orders/add'])">
-	Add Item
-</button>
-<table>
-	<thead>
-		<tr>
-			<th>Order ID</th>
-			<th>Customer ID</th>
-			<th>SKU</th>
-			<th>Quantity</th>
-			<th>Status</th>
-			<th>Shipping Address</th>
-			<th>Order Date</th>
-			<th>Assigned Staff</th>
-			<th>Actions</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let order of orderList">
-			<td>{{ order.orderId }}</td>
-			<td>{{ order.customerId }}</td>
-			<td>{{ order.sku }}</td>
-			<td>{{ order.quantity }}</td>
-			<td>{{ order.status }}</td>
-			<td>{{ order.shippingAddress }}</td>
-			<td>{{ order.orderDate | date : "short" }}</td>
-			<td>
-				{{
-					order.assignedStaff
-						? order.assignedStaff.name
-						: "Not Assigned"
-				}}
-			</td>
-			<td>
-				<a (click)="viewOrder(order.orderId)">View</a>
-				<a
-					(click)="
-						router.navigate([
-							'/orders/update-status',
-							order.orderId
-						])
-					"
-					>Update Status</a
-				>
-				<a (click)="assignStaff(order.orderId)">Assign Staff</a>
-			</td>
-		</tr>
-	</tbody>
-</table>
-<app-order-dashboard></app-order-dashboard>
+	<div class="d-flex justify-content-between align-items-center mb-3">
+		<h3>Orders</h3>
+		<button
+			class="btn btn-primary"
+			(click)="router.navigate(['/orders/add'])"
+		>
+			Add Order
+		</button>
+	</div>
+
+	<table cTable hover class="table table-bordered table-striped">
+		<thead class="table-primary">
+			<tr>
+				<th scope="col">Order ID</th>
+				<th scope="col">Customer ID</th>
+				<th scope="col">SKU</th>
+				<th scope="col">Quantity</th>
+				<th scope="col">Status</th>
+				<th scope="col">Shipping Address</th>
+				<th scope="col">Order Date</th>
+				<th scope="col">Assigned Staff</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let order of orderList" class="table-row-hover">
+				<td>{{ order.orderId }}</td>
+				<td>{{ order.customerId }}</td>
+				<td>{{ order.sku }}</td>
+				<td>{{ order.quantity }}</td>
+				<td>{{ order.status }}</td>
+				<td>{{ order.shippingAddress }}</td>
+				<td>{{ order.orderDate | date : "short" }}</td>
+				<td>
+					{{
+						order.assignedStaff
+							? order.assignedStaff.name
+							: "Not Assigned"
+					}}
+				</td>
+				<td>
+					<span
+						class="text-info me-3"
+						title="View"
+						(click)="viewOrder(order.orderId)"
+					>
+						<svg cIcon name="cil-description"></svg>
+					</span>
+					<span
+						class="text-warning me-3"
+						title="Update Status"
+						(click)="
+							router.navigate([
+								'/orders/update-status',
+								order.orderId
+							])
+						"
+					>
+						<svg cIcon name="cil-pencil"></svg>
+					</span>
+					<span
+						class="text-primary"
+						title="Assign Staff"
+						(click)="assignStaff(order.orderId)"
+					>
+						<svg cIcon name="cil-user-follow"></svg>
+					</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<app-order-dashboard></app-order-dashboard>
+</div>

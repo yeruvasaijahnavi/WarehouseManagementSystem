@@ -2,12 +2,14 @@ import { Component, inject, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { StaffService } from "../../../services/staff.service";
 import { CommonModule } from "@angular/common";
+import { TableModule } from "@coreui/angular";
+import { IconDirective } from "@coreui/icons-angular";
 
 @Component({
 	selector: "app-staff-list",
 	templateUrl: "./staff-list.component.html",
 	styleUrls: ["./staff-list.component.scss"],
-	imports: [CommonModule],
+	imports: [CommonModule, TableModule, IconDirective],
 })
 export class StaffListComponent implements OnInit {
 	staffList: any[] = [];

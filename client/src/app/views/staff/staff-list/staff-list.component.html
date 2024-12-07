@@ -1,32 +1,46 @@
-<h2>Staff List</h2>
+<div class="container">
+	<h2>Staff List</h2>
 
-<button class="btn btn-primary" (click)="router.navigate(['/staff/add'])">
-	Add Staff Member
-</button>
+	<div class="d-flex justify-content-between align-items-center mb-3">
+		<h3>Staff</h3>
+		<button
+			class="btn btn-primary"
+			(click)="router.navigate(['/staff/add'])"
+		>
+			Add Staff Member
+		</button>
+	</div>
 
-<table class="table">
-	<thead>
-		<tr>
-			<th>Staff ID</th>
-			<th>Name</th>
-			<th>Email</th>
-			<th>Role</th>
-			<th>Shift</th>
-			<th>Status</th>
-			<th>Actions</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let staff of staffList">
-			<td>{{ staff.staffId }}</td>
-			<td>{{ staff.name }}</td>
-			<td>{{ staff.email }}</td>
-			<td>{{ staff.role }}</td>
-			<td>{{ staff.shift }}</td>
-			<td>{{ staff.status }}</td>
-			<td>
-				<a (click)="viewStaffDetails(staff.staffId)">View</a>
-			</td>
-		</tr>
-	</tbody>
-</table>
+	<table cTable hover class="table table-bordered table-striped">
+		<thead class="table-primary">
+			<tr>
+				<th scope="col">Staff ID</th>
+				<th scope="col">Name</th>
+				<th scope="col">Email</th>
+				<th scope="col">Role</th>
+				<th scope="col">Shift</th>
+				<th scope="col">Status</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let staff of staffList" class="table-row-hover">
+				<td>{{ staff.staffId }}</td>
+				<td>{{ staff.name }}</td>
+				<td>{{ staff.email }}</td>
+				<td>{{ staff.role }}</td>
+				<td>{{ staff.shift }}</td>
+				<td>{{ staff.status }}</td>
+				<td>
+					<span
+						class="text-info me-3"
+						title="View"
+						(click)="viewStaffDetails(staff.staffId)"
+					>
+						<svg cIcon name="cil-description"></svg>
+					</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
