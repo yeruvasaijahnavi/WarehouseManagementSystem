@@ -11,9 +11,7 @@ export class DashboardService {
 	constructor(private http: HttpClient) {}
 
 	getInventoryTotalValue(): Observable<{ totalValue: number }> {
-		return this.http.get<{ totalValue: number }>(
-			`${this.baseUrl}/inventory-total-value`
-		);
+		return this.http.get<any>(`${this.baseUrl}/inventory-total-value`);
 	}
 	//   getInventoryValueByCategory(): Observable<any> {
 	//     return this.http.get(`${this.baseUrl}/inventory-value-by-category`);
