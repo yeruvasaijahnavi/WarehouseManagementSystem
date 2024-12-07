@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Inventory = require("../models/Inventory");
+const Order = require("../models/Order");
 const authorizeUser = require("../middleware/auth");
 
 router.get(
@@ -32,6 +33,38 @@ router.get(
 				{ $group: { _id: null, totalQuantity: { $sum: "$quantity" } } },
 			]);
 			res.json(data);
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({
+				message: "Internal Server Error",
+				error: err.message,
+			});
+		}
+	}
+);
+
+// Route to get total number of orders
+router.get("/orders-total-count", authorizeUser("admin"), async (req, res) => {
+	try {
+		const totalOrders = await Order.countDocuments();
+		res.json({ totalOrders });
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({
+			message: "Internal Server Error",
+			error: err.message,
+		});
+	}
+});
+
+// Route to get distinct customer count
+router.get(
+	"/orders-distinct-customers",
+	authorizeUser("admin"),
+	async (req, res) => {
+		try {
+			const distinctCustomers = await Order.distinct("customerId");
+			res.json({ distinctCustomers: distinctCustomers.length });
 		} catch (err) {
 			console.error(err);
 			res.status(500).json({

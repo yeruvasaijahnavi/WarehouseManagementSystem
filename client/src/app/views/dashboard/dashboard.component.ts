@@ -1,4 +1,5 @@
 import { CommonModule, DOCUMENT, NgStyle } from "@angular/common";
+import { OrdersDashboardComponent } from "./orders-dashboard/orders-dashboard.component";
 import {
 	Component,
 	DestroyRef,
@@ -93,6 +94,7 @@ interface IUser {
 		ChartjsModule,
 		WidgetModule,
 		CommonModule,
+		OrdersDashboardComponent,
 	],
 })
 export class DashboardComponent implements OnInit {

@@ -1,0 +1,27 @@
+<p>orders-dashboard works!</p>
+<c-row class="g-4">
+	<c-col xl="3" md="6" sm="6">
+		<c-widget-stat-f
+			[title]="'Total Orders'"
+			color="warning"
+			padding
+			[value]="totalOrders !== null ? totalOrders : 'Loading...'"
+		>
+			<ng-template cTemplateId="widgetIconTemplate">
+				<svg cIcon name="cilInbox" size="xl" width="24"></svg>
+			</ng-template>
+		</c-widget-stat-f>
+	</c-col>
+	<c-col xl="3" md="6" sm="6">
+		<c-widget-stat-f
+			[title]="'Distinct Customers'"
+			color="info"
+			padding
+			[value]="customerCount !== null ? customerCount : 'Loading...'"
+		>
+			<ng-template cTemplateId="widgetIconTemplate">
+				<svg cIcon name="cilPeople" size="xl" width="24"></svg>
+			</ng-template>
+		</c-widget-stat-f>
+	</c-col>
+</c-row>

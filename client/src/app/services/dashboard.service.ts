@@ -17,6 +17,16 @@ export class DashboardService {
 	getInventoryTotalQuantity(): Observable<{ totalQuantity: number }> {
 		return this.http.get<any>(`${this.baseUrl}/inventory-total-quantity`);
 	}
+
+	getOrdersTotalCount(): Observable<{ totalCount: number }> {
+		return this.http.get<any>(`${this.baseUrl}/orders-total-count`);
+	}
+
+	getOrdersDistinctCustomers(): Observable<{
+		distinctCustomerCount: number;
+	}> {
+		return this.http.get<any>(`${this.baseUrl}/orders-distinct-customers`);
+	}
 	//   getInventoryValueByCategory(): Observable<any> {
 	//     return this.http.get(`${this.baseUrl}/inventory-value-by-category`);
 	//   }
