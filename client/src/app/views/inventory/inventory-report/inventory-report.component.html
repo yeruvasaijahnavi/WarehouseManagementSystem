@@ -1,6 +1,6 @@
 <div class="container">
 	<h2>Inventory Valuation Report</h2>
-
+	<app-inventory-dashboard></app-inventory-dashboard>
 	<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
 	<div *ngIf="report.length > 0; else noData">
