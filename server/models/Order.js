@@ -14,6 +14,11 @@ const orderSchema = new mongoose.Schema({
 	},
 	shippingAddress: { type: String, required: true },
 	orderDate: { type: Date, default: Date.now },
+	assignedStaff: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Staff", // Reference to the Staff model
+		required: false, // Not required because an order might not be assigned initially
+	},
 });
 
 // Order Model

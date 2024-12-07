@@ -13,6 +13,7 @@
 			<th>Status</th>
 			<th>Shipping Address</th>
 			<th>Order Date</th>
+			<th>Assigned Staff</th>
 			<th>Actions</th>
 		</tr>
 	</thead>
@@ -25,6 +26,13 @@
 			<td>{{ order.status }}</td>
 			<td>{{ order.shippingAddress }}</td>
 			<td>{{ order.orderDate | date : "short" }}</td>
+			<td>
+				{{
+					order.assignedStaff
+						? order.assignedStaff.name
+						: "Not Assigned"
+				}}
+			</td>
 			<td>
 				<a (click)="viewOrder(order.orderId)">View</a>
 				<a

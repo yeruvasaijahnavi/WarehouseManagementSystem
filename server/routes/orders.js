@@ -61,7 +61,10 @@ router.post("/", authorizeUser("admin"), async (req, res) => {
 // Get all orders (GET /orders)
 router.get("/", async (req, res) => {
 	try {
-		const orders = await Order.find();
+		const orders = await Order.find().populate(
+			"assignedStaff",
+			"name role email"
+		);
 		res.status(200).json(orders);
 	} catch (err) {
 		console.error(err);
