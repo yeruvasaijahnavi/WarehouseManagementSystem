@@ -1,13 +1,39 @@
 const StockAlert = require("../models/StockAlert");
+const nodemailer = require("nodemailer");
 
-const GLOBAL_THRESHOLD = 5; // or 10 as needed
+const GLOBAL_THRESHOLD = 10;
 
-// Service to check and create low-stock alerts
+// Email transporter setup
+const transporter = nodemailer.createTransport({
+	service: "gmail",
+	host: "smtp.gmail.com",
+	port: 587,
+	secure: false,
+	auth: {
+		user: process.env.USER_EMAIL,
+		pass: process.env.USER_PASS, // Replace with an app-specific password if needed
+	},
+});
+
+const sendEmail = async (recipient, subject, text) => {
+	try {
+		await transporter.sendMail({
+			from: `"Warehouse Alerts" <${process.env.USER_EMAIL}>`,
+			to: recipient,
+			subject: subject,
+			text: text,
+		});
+		console.log("Email sent successfully!");
+	} catch (err) {
+		console.error("Error sending email:", err);
+	}
+};
 const checkLowStock = async (item) => {
 	console.log("run check low stock function");
 	try {
 		if (item.quantity < GLOBAL_THRESHOLD) {
 			// Check if an active alert already exists
+			console.log("item quantity is less than global threshold");
 			const existingAlert = await StockAlert.findOne({
 				itemId: item._id,
 				status: "active",
@@ -24,6 +50,13 @@ const checkLowStock = async (item) => {
 				});
 				await alert.save();
 				console.log(`Low stock alert created for item: ${item.name}`);
+
+				// Send email notification
+				await sendEmail(
+					"yeruvasaijahnavi@gmail.com", // Replace with recipient's email
+					"Low Stock Alert",
+					`The item '${item.name}' is low in stock. Current quantity: ${item.quantity}.`
+				);
 			}
 		}
 	} catch (err) {
