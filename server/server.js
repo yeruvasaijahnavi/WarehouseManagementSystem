@@ -11,11 +11,7 @@ const cors = require("cors");
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON
-app.use(
-	cors({
-		origin: ["https://yeruvasaijahnavi.github.io", "http://localhost:4200"],
-	})
-);
+app.use(cors());
 // Connect to MongoDB
 mongoose
 	.connect(process.env.MONGO_URI)
@@ -32,7 +28,7 @@ app.use("/logs", logRoutes); // Add log routes
 app.use("/dashboard", dashboardRoutes); // Add log routes
 // Test route
 app.get("/", (req, res) => {
-	res.send("Warehouse Management System Backend is Running! CORS UPDATE");
+	res.send("Warehouse Management System Backend is Running! rm cors");
 });
 
 app.listen(process.env.PORT, () => {
