@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-
+import { environment } from "../../environments/environment";
 @Injectable({
 	providedIn: "root",
 })
 export class InventoryDashboardService {
-	private baseUrl = "http://localhost:3000/dashboard"; // Update with your API URL
+	private baseUrl = `${environment.apiUrl}/dashboard`; // Update with your API URL
 
 	constructor(private http: HttpClient) {}
 

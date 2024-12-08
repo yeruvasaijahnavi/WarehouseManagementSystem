@@ -1,13 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { tap } from "rxjs";
 
+import { environment } from "../../environments/environment";
 @Injectable({
 	providedIn: "root",
 })
 export class AuthService {
 	constructor(private http: HttpClient) {}
-	baseUrl = "http://localhost:3000/auth";
+	baseUrl = `${environment.apiUrl}/auth`;
 
 	signup(data: any) {
 		return this.http.post(`${this.baseUrl}/register`, data);

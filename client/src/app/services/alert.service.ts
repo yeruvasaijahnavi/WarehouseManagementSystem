@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 @Injectable({
 	providedIn: "root",
 })
 export class AlertService {
-	baseUrl = "http://localhost:3000/alerts";
+	baseUrl = `${environment.apiUrl}/alerts`;
 
 	constructor(private http: HttpClient) {}
 
