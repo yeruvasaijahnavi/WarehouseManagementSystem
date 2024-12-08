@@ -12,6 +12,7 @@ const cors = require("cors");
 const app = express();
 app.use(express.json()); // Middleware to parse JSON
 app.use(cors({ origin: "http://localhost:4200" }));
+app.use(cors({ origin: "https://yeruvasaijahnavi.github.io/StoreWiz/" }));
 // Connect to MongoDB
 mongoose
 	.connect(process.env.MONGO_URI)
