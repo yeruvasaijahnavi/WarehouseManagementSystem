@@ -44,10 +44,7 @@ import { AuthService } from "src/app/services/auth.service";
 		DropdownToggleDirective,
 		AvatarComponent,
 		DropdownMenuDirective,
-		DropdownHeaderDirective,
 		DropdownItemDirective,
-		BadgeComponent,
-		DropdownDividerDirective,
 		CommonModule,
 	],
 })
