@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json()); // Middleware to parse JSON
 app.use(
 	cors({
-		origin: ["https://yeruvasaijahnavi.github.io"],
+		origin: ["https://yeruvasaijahnavi.github.io", "http://localhost:4200"],
 	})
 );
 // Connect to MongoDB
