@@ -1,1 +1,0 @@
-import{Z as e,ca as i,pd as o}from"./chunk-HB3EFGHP.js";var n=(()=>{class t{constructor(r){this.http=r,this.baseUrl="http://localhost:3000/staff"}getStaffMembers(){return this.http.get(this.baseUrl)}static{this.\u0275fac=function(s){return new(s||t)(i(o))}}static{this.\u0275prov=e({token:t,factory:t.\u0275fac,providedIn:"root"})}}return t})();export{n as a};
