@@ -20,7 +20,7 @@
 				*ngFor="let orderProcessing of orderProcessings"
 				class="table-row-hover"
 			>
-				<td>{{ orderProcessing._id }}</td>
+				<td>P{{ orderProcessing._id?.slice(-3) }}</td>
 				<td>{{ orderProcessing.orderId?.orderId }}</td>
 				<td>{{ orderProcessing.orderId?.status }}</td>
 				<td>{{ orderProcessing.startDate | date : "short" }}</td>
