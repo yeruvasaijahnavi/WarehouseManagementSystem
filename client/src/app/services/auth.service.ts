@@ -27,7 +27,11 @@ export class AuthService {
 		if (token) {
 			const decodedToken = JSON.parse(atob(token.split(".")[1])); // Decoding JWT
 			console.log(decodedToken);
-			return { username: decodedToken.username, role: decodedToken.role };
+			return {
+				username: decodedToken.username,
+				role: decodedToken.role,
+				email: decodedToken.email,
+			};
 		}
 		return { username: "", role: "" };
 	}

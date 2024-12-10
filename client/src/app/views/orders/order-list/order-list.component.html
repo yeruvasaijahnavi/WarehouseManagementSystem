@@ -24,7 +24,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let order of orderList" class="table-row-hover">
+			<tr *ngFor="let order of filteredOrderList" class="table-row-hover">
 				<td>{{ order.orderId }}</td>
 				<td>{{ order.customerId }}</td>
 				<td>{{ order.sku }}</td>

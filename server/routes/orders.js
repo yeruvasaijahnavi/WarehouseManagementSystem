@@ -19,7 +19,7 @@ router.put("/:orderId/assign-staff", async (req, res) => {
 			{ assignedStaff: staffId },
 			{ status: "assigned" },
 			{ new: true }
-		).populate("assignedStaff", "name role email");
+		).populate("assignedStaff", "name role username");
 		res.status(200).json(order);
 	} catch (err) {
 		console.error(err);
@@ -117,53 +117,59 @@ router.get("/:id", async (req, res) => {
 
 // Update the status of an order (PUT /orders/:id/status)
 // router.put("/:id/status", authorizeUser(["staff"]), async (req, res) => {
-router.put("/:id/status", authorizeUser(["admin"]), async (req, res) => {
-	try {
-		const { status } = req.body;
+router.put(
+	"/:id/status",
+	authorizeUser(["admin", "staff"]),
+	async (req, res) => {
+		try {
+			const { status } = req.body;
 
-		// Validate status change
-		const validStatuses = [
-			"pending",
-			"assigned",
-			"packed",
-			"shipped",
-			"delivered",
-			"canceled",
-		];
-		if (!validStatuses.includes(status)) {
-			return res.status(400).json({ message: "Invalid order status" });
+			// Validate status change
+			const validStatuses = [
+				"pending",
+				"assigned",
+				"packed",
+				"shipped",
+				"delivered",
+				"canceled",
+			];
+			if (!validStatuses.includes(status)) {
+				return res
+					.status(400)
+					.json({ message: "Invalid order status" });
+			}
+
+			const order = await Order.findOne({ orderId: req.params.id });
+			if (!order) {
+				return res.status(404).json({ message: "Order not found" });
+			}
+
+			// Update the order status
+			order.status = status;
+			await order.save();
+			console.log("curr user:", req.user);
+			// Create an audit log for updating order status
+			await createLog(
+				"update",
+				"Order",
+				order._id,
+				req.user.userId,
+				`Updated status of order ${req.params.id} to ${status}`
+			);
+
+			res.status(200).json({
+				message: `Order status updated to ${status}`,
+				order,
+			});
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({
+				message: "Internal Server Error",
+				error: err.message,
+			});
 		}
-
-		const order = await Order.findOne({ orderId: req.params.id });
-		if (!order) {
-			return res.status(404).json({ message: "Order not found" });
-		}
-
-		// Update the order status
-		order.status = status;
-		await order.save();
-		console.log("curr user:", req.user);
-		// Create an audit log for updating order status
-		await createLog(
-			"update",
-			"Order",
-			order._id,
-			req.user.userId,
-			`Updated status of order ${req.params.id} to ${status}`
-		);
-
-		res.status(200).json({
-			message: `Order status updated to ${status}`,
-			order,
-		});
-	} catch (err) {
-		console.error(err);
-		res.status(500).json({
-			message: "Internal Server Error",
-			error: err.message,
-		});
 	}
-});
+);
 
 // // Update the status of an order (PUT /orders/:id)
 // router.put("/:id", authorizeUser(["staff"]), async (req, res) => {
