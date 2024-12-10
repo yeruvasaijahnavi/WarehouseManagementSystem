@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const orderProcessingSchema = new mongoose.Schema({
 	orderId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: "Order", // Linking to the Order model
+		ref: "Order",
 		required: true,
 	},
 	status: {
@@ -17,7 +17,7 @@ const orderProcessingSchema = new mongoose.Schema({
 			"delivered",
 			"canceled",
 		],
-		default: "received", // Initial status when order is placed
+		default: "received",
 	},
 	startDate: {
 		type: Date,
@@ -29,7 +29,7 @@ const orderProcessingSchema = new mongoose.Schema({
 	},
 	staffId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: "User", // Assuming staff is a user in the system
+		ref: "Staff", // Linking to the Staff model
 	},
 });
 

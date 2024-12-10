@@ -115,7 +115,8 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update the status of an order (PUT /orders/:id/status)
-router.put("/:id/status", authorizeUser("staff"), async (req, res) => {
+// router.put("/:id/status", authorizeUser("staff"), async (req, res) => {
+router.put("/:id/status", async (req, res) => {
 	try {
 		const { status } = req.body;
 
