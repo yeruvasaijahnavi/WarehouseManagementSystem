@@ -28,7 +28,7 @@ export class OrderAddComponent implements OnInit {
 		this.orderService.addOrder(this.order).subscribe({
 			next: (response) => {
 				console.log("Order added successfully:", response);
-				this.router.navigate(["/order"]); // Redirect to order list page after adding
+				this.router.navigate(["/orders"]); // Redirect to order list page after adding
 			},
 			error: (error) => {
 				console.error("Error adding Order:", error);

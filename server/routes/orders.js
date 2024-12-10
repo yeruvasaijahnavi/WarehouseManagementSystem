@@ -29,7 +29,6 @@ router.put("/:orderId/assign-staff", async (req, res) => {
 	}
 });
 
-// Create a new order (POST /orders)
 router.post("/", authorizeUser("admin"), async (req, res) => {
 	try {
 		const { customerId, sku, quantity, shippingAddress } = req.body;
