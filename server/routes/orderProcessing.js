@@ -35,26 +35,26 @@ router.get("/", async (req, res) => {
 	}
 });
 
-router.get("/:id", authorizeUser(["staff"]), async (req, res) => {
+router.get("/:id", authorizeUser(["staff", "admin"]), async (req, res) => {
 	try {
-		const orderProcessingHistory = await OrderProcessing.find({
-			orderId: req.params.id,
-		})
-			.populate("staffId", "username") // Assuming 'staffId' is a user model with a 'username' field
-			.sort({ startDate: 1 });
+		const order = await Order.findOne({ orderId: req.params.id })
+			.populate("assignedStaff", "name email role") // Populate staff details
+			.exec();
 
-		if (!orderProcessingHistory.length) {
-			return res.status(404).json({
-				message: "No processing history found for this order",
-			});
+		if (!order) {
+			return res.status(404).json({ message: "Order not found" });
 		}
 
-		// Here, you can include the current status from the Order
-		const order = await Order.findOne({ orderId: req.params.id });
+		// Fetch processing history
+		const processingHistory = await OrderProcessing.find({
+			orderId: order._id,
+		})
+			.sort({ startDate: 1 })
+			.exec();
 
 		res.status(200).json({
-			orderProcessingHistory,
-			orderStatus: order.status, // Add the status of the order
+			order,
+			processingHistory,
 		});
 	} catch (err) {
 		console.error(err);
