@@ -7,7 +7,17 @@ const logSchema = new mongoose.Schema(
 			required: true,
 			enum: ["add", "update", "delete"],
 		},
-		itemId: { type: mongoose.Schema.Types.String, ref: "Inventory" },
+		itemType: {
+			type: String,
+			required: true,
+			enum: ["Inventory", "Order"], // To differentiate between Inventory and Order
+		},
+		itemId: {
+			type: mongoose.Schema.Types.ObjectId,
+			refPath: "itemType", // Dynamic reference based on itemType
+			required: true,
+		},
+
 		userId: { type: mongoose.Schema.Types.String, ref: "User" },
 		actionDate: { type: Date, default: Date.now },
 		description: { type: String, required: true },

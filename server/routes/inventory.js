@@ -58,6 +58,7 @@ router.post("/", authorizeUser("admin"), async (req, res) => {
 		// Create an audit log for the new item
 		await createLog(
 			"add",
+			"Inventory",
 			newItem._id,
 			req.user.userId,
 			`Added new item: ${name}`
@@ -129,6 +130,7 @@ router.put("/:sku", authorizeUser("admin"), async (req, res) => {
 		// Create an audit log for updating an item
 		await createLog(
 			"update",
+			"Inventory",
 			updatedItem._id,
 			req.user.userId,
 			`Updated item with SKU: ${req.params.sku}`
@@ -158,6 +160,7 @@ router.delete("/:sku", authorizeUser("admin"), async (req, res) => {
 		// Create an audit log for deleting an item
 		await createLog(
 			"delete",
+			"Inventory",
 			deletedItem._id,
 			req.user.userId,
 			`Deleted item with SKU: ${req.params.sku}`

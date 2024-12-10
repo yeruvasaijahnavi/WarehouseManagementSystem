@@ -1,10 +1,11 @@
 const Log = require("../models/Log");
 
 // Function to create an audit log
-async function createLog(actionType, itemId, userId, description) {
+async function createLog(actionType, itemType, itemId, userId, description) {
 	try {
 		const log = new Log({
 			actionType,
+			itemType,
 			itemId,
 			userId,
 			description,

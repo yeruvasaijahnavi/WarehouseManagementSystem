@@ -17,6 +17,7 @@ router.put("/:orderId/assign-staff", async (req, res) => {
 		const order = await Order.findOneAndUpdate(
 			{ orderId: req.params.orderId },
 			{ assignedStaff: staffId },
+			{ status: "assigned" },
 			{ new: true }
 		).populate("assignedStaff", "name role email");
 		res.status(200).json(order);
@@ -60,6 +61,7 @@ router.post("/", authorizeUser("admin"), async (req, res) => {
 		// Create an audit log for the new order
 		await createLog(
 			"add",
+			"Order",
 			newOrder._id,
 			req.user.userId,
 			`Created new order: ${orderId}`
@@ -115,12 +117,19 @@ router.get("/:id", async (req, res) => {
 
 // Update the status of an order (PUT /orders/:id/status)
 // router.put("/:id/status", authorizeUser("staff"), async (req, res) => {
-router.put("/:id/status", async (req, res) => {
+router.put("/:id/status", authorizeUser(["admin"]), async (req, res) => {
 	try {
 		const { status } = req.body;
 
 		// Validate status change
-		const validStatuses = ["pending", "assigned", "shipped", "delivered"];
+		const validStatuses = [
+			"pending",
+			"assigned",
+			"packed",
+			"shipped",
+			"delivered",
+			"canceled",
+		];
 		if (!validStatuses.includes(status)) {
 			return res.status(400).json({ message: "Invalid order status" });
 		}
@@ -133,10 +142,11 @@ router.put("/:id/status", async (req, res) => {
 		// Update the order status
 		order.status = status;
 		await order.save();
-
+		console.log("curr user:", req.user);
 		// Create an audit log for updating order status
 		await createLog(
 			"update",
+			"Order",
 			order._id,
 			req.user.userId,
 			`Updated status of order ${req.params.id} to ${status}`
@@ -146,31 +156,6 @@ router.put("/:id/status", async (req, res) => {
 			message: `Order status updated to ${status}`,
 			order,
 		});
-	} catch (err) {
-		console.error(err);
-		res.status(500).json({
-			message: "Internal Server Error",
-			error: err.message,
-		});
-	}
-});
-
-// Get the processing history of an order (GET /orders/:id/history)
-router.get("/:id/history", async (req, res) => {
-	try {
-		const orderProcessingHistory = await OrderProcessing.find({
-			orderId: req.params.id,
-		})
-			.populate("staffId", "username") // Assuming 'staffId' is a user model with a 'username' field
-			.sort({ startDate: 1 }); // Sort by startDate to get processing timeline
-
-		if (!orderProcessingHistory.length) {
-			return res.status(404).json({
-				message: "No processing history found for this order",
-			});
-		}
-
-		res.status(200).json(orderProcessingHistory);
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({
@@ -224,7 +209,7 @@ router.get("/:id/history", async (req, res) => {
 // });
 
 // Delete an order (DELETE /orders/:id)
-router.delete("/:id", authorizeUser("admin"), async (req, res) => {
+router.delete("/:id", authorizeUser(["admin"]), async (req, res) => {
 	try {
 		const deletedOrder = await Order.findOneAndDelete({
 			orderId: req.params.id,
@@ -236,6 +221,7 @@ router.delete("/:id", authorizeUser("admin"), async (req, res) => {
 		// Create an audit log for deleting an order
 		await createLog(
 			"delete",
+			"Order",
 			deletedOrder._id,
 			req.user.userId,
 			`Deleted order with ID: ${req.params.id}`
