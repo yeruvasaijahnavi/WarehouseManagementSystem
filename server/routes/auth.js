@@ -33,8 +33,8 @@ router.post("/register", async (req, res) => {
 				staffShifts[Math.floor(Math.random() * staffShifts.length)];
 
 			staff = new Staff({
-				staffId: `S${Math.floor(1000 + Math.random() * 9000)}`, // Random 4-digit staff ID
-				name: name,
+				staffId: `S${Math.floor(100 + Math.random() * 900)}`, // Random 4-digit staff ID
+				name,
 				role: staffRole,
 				email,
 				shift: staffShift,
