@@ -1,1 +1,47 @@
-<p>order-processing-view works!</p>
+<div class="container">
+	<h2 class="my-4">Order Details</h2>
+
+	<!-- Order Information -->
+	<div *ngIf="order" class="mb-4">
+		<h4>Order ID: {{ order.orderId }}</h4>
+		<p><strong>Customer:</strong> {{ order.customerId }}</p>
+		<p><strong>Assigned Staff:</strong> {{ order.assignedStaff?.name }}</p>
+		<p><strong>Status:</strong> {{ order.status }}</p>
+	</div>
+
+	<h4>Order Progress</h4>
+	<c-progress-stacked>
+		<c-progress
+			[animated]="true"
+			[value]="progressValue"
+			color="success"
+			variant="striped"
+			>{{ order.status }}</c-progress
+		>
+	</c-progress-stacked>
+
+	<h4 class="mt-4">Audit Logs</h4>
+	<div *ngIf="auditLogs.length > 0">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Action Type</th>
+					<th>Description</th>
+					<th>Action Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let log of auditLogs; let idx = index">
+					<td>{{ idx + 1 }}</td>
+					<td>{{ log.actionType }}</td>
+					<td>{{ log.description }}</td>
+					<td>{{ log.actionDate | date : "short" }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div *ngIf="auditLogs.length === 0">
+		<p>No audit logs available.</p>
+	</div>
+</div>
