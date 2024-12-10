@@ -30,7 +30,6 @@ const orderProcessingSchema = new mongoose.Schema({
 	staffId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "User", // Assuming staff is a user in the system
-		required: true,
 	},
 });
 

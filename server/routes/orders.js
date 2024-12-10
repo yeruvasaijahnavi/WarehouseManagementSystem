@@ -51,13 +51,12 @@ router.post("/", authorizeUser("admin"), async (req, res) => {
 		await newOrder.save();
 
 		// // Create initial order processing entry
-		// const newOrderProcessing = new OrderProcessing({
-		// 	orderId: newOrder._id,
-		// 	status: "received", // Initial status
-		// 	staffId: mongoose.Types.ObjectId(req.user.userId), // Staff handling the order
-		// });
+		const newOrderProcessing = new OrderProcessing({
+			orderId: newOrder._id,
+			status: "received", // Initial status
+		});
 
-		// await newOrderProcessing.save();
+		await newOrderProcessing.save();
 
 		// Create an audit log for the new order
 		await createLog(
