@@ -16,10 +16,6 @@ const orderProcessingSchema = new mongoose.Schema({
 	completionDate: {
 		type: Date,
 	},
-	staffId: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Staff", // Linking to the Staff model
-	},
 });
 
 module.exports = mongoose.model("OrderProcessing", orderProcessingSchema);

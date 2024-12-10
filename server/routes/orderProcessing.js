@@ -5,13 +5,18 @@ const { createLog } = require("../services/logService");
 const authorizeUser = require("../middleware/auth");
 const router = express.Router();
 
-// Get all order processing details (GET /orderprocessing)
 router.get("/", async (req, res) => {
 	try {
 		// Fetch all order processing details
 		const orderProcessingDetails = await OrderProcessing.find()
-			.populate("orderId", "status") // Populate the status from Order model
-			.populate("staffId", "username") // Populate the staff username from Staff model
+			.populate({
+				path: "orderId",
+				select: "orderId status", // Select the orderId and status fields from Order model
+				populate: {
+					path: "assignedStaff", // Populate the assignedStaff field inside Order model
+					select: "name", // Select the username from the Staff model
+				},
+			})
 			.sort({ startDate: 1 }); // Optional: Sort by start date to view in chronological order
 
 		if (!orderProcessingDetails.length) {
