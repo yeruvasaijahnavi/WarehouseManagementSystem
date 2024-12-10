@@ -16,4 +16,8 @@ export class OrderProcessingService {
 	getAllOrderProcessing(): Observable<any> {
 		return this.http.get<any>(this.baseUrl);
 	}
+	// src/app/services/order-processing.service.ts
+	getOrderDetails(orderId: string): Observable<any> {
+		return this.http.get<any>(`${this.baseUrl}/${orderId}`);
+	}
 }

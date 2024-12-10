@@ -12,7 +12,7 @@
 				<th scope="col">Start Date</th>
 				<th scope="col">Completion Date</th>
 				<th scope="col">Assigned Staff</th>
-				<!-- <th scope="col">Actions</th> -->
+				<th scope="col">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -37,6 +37,41 @@
 							? orderProcessing.orderId?.assignedStaff?.name
 							: "Not Assigned"
 					}}
+				</td>
+				<td>
+					<div class="d-flex align-items-center">
+						<span
+							class="text-info me-3"
+							title="View"
+							(click)="
+								router.navigate([
+									'/order-processing/view',
+									orderProcessing.orderId.orderId
+								])
+							"
+						>
+							View
+						</span>
+						<!-- <span
+							class="text-warning me-3"
+							title="Update Status"
+							(click)="
+								router.navigate([
+									'/orders/update-status',
+									order.orderId
+								])
+							"
+						>
+							<svg cIcon name="cil-pencil"></svg>
+						</span>
+						<span
+							class="text-primary"
+							title="Assign Staff"
+							(click)="assignStaff(order.orderId)"
+						>
+							<svg cIcon name="cil-user-follow"></svg>
+						</span> -->
+					</div>
 				</td>
 				<!-- <td>
 					<div class="d-flex align-items-center">

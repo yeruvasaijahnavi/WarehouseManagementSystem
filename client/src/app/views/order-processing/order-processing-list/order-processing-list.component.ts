@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { OrderProcessingService } from "src/app/services/order-processing.service";
 import { CommonModule } from "@angular/common";
+import { Router } from "@angular/router";
 @Component({
 	selector: "app-order-processing-list",
 	imports: [CommonModule],
@@ -15,6 +16,7 @@ export class OrderProcessingListComponent {
 	ngOnInit(): void {
 		this.getAllOrderProcessing();
 	}
+	router = inject(Router);
 
 	// Fetch all order processing details from the service
 	getAllOrderProcessing(): void {
@@ -30,5 +32,8 @@ export class OrderProcessingListComponent {
 				);
 			},
 		});
+	}
+	viewOrder(orderId: string): void {
+		this.router.navigate(["view", orderId]); // Correct usage
 	}
 }
