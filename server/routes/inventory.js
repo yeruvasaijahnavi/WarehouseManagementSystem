@@ -31,7 +31,7 @@ router.get("/report", async (req, res) => {
 	}
 });
 // Create a new inventory item (POST /inventory)
-router.post("/", authorizeUser("admin"), async (req, res) => {
+router.post("/", authorizeUser(["admin"]), async (req, res) => {
 	try {
 		const { sku, name, category, description, quantity, price, location } =
 			req.body;
@@ -111,7 +111,7 @@ router.get("/:sku", async (req, res) => {
 });
 
 // Update an inventory item (PUT /inventory/:sku)
-router.put("/:sku", authorizeUser("admin"), async (req, res) => {
+router.put("/:sku", authorizeUser(["admin"]), async (req, res) => {
 	try {
 		const { name, category, description, quantity, price, location } =
 			req.body;
@@ -149,7 +149,7 @@ router.put("/:sku", authorizeUser("admin"), async (req, res) => {
 });
 
 // Delete an inventory item (DELETE /inventory/:sku)
-router.delete("/:sku", authorizeUser("admin"), async (req, res) => {
+router.delete("/:sku", authorizeUser(["admin"]), async (req, res) => {
 	try {
 		const deletedItem = await Inventory.findOneAndDelete({
 			sku: req.params.sku,

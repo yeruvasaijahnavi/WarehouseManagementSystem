@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 	}
 });
 
-router.get("/:id", authorizeUser("staff"), async (req, res) => {
+router.get("/:id", authorizeUser(["staff"]), async (req, res) => {
 	try {
 		const orderProcessingHistory = await OrderProcessing.find({
 			orderId: req.params.id,

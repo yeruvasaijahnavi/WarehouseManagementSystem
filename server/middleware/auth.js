@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-function authorizeUser(requiredRole) {
+function authorizeUser(requiredRoles = []) {
 	return async (req, res, next) => {
 		try {
 			const token = req.headers.authorization?.split(" ")[1];
@@ -20,9 +20,15 @@ function authorizeUser(requiredRole) {
 				return res.status(404).json({ message: "User not found" });
 			}
 
-			if (requiredRole && user.role !== requiredRole) {
+			// Check if the user's role matches any of the required roles
+			if (
+				requiredRoles.length > 0 &&
+				!requiredRoles.includes(user.role)
+			) {
 				return res.status(403).json({
-					message: `Access denied. You need to be a ${requiredRole} but you are a ${user.role}`,
+					message: `Access denied. Allowed roles: ${requiredRoles.join(
+						", "
+					)}. Your role: ${user.role}`,
 				});
 			}
 
@@ -31,7 +37,7 @@ function authorizeUser(requiredRole) {
 		} catch (err) {
 			console.error("Authorization error:", err);
 			res.status(403).json({
-				message: `Invalid or expired token ${token}	`,
+				message: `Invalid or expired token`,
 			});
 		}
 	};
