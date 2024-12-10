@@ -11,7 +11,7 @@ const orderProcessingSchema = new mongoose.Schema({
 		type: String,
 		enum: [
 			"received",
-			"in progress",
+			"assigned",
 			"packed",
 			"shipped",
 			"delivered",

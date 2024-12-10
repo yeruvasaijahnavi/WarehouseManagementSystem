@@ -9,14 +9,14 @@ const orderSchema = new mongoose.Schema({
 	status: {
 		type: String,
 		required: true,
-		enum: ["pending", "in progress", "shipped", "delivered"],
+		enum: ["pending", "assigned", "shipped", "delivered"],
 		default: "pending",
 	},
 	shippingAddress: { type: String, required: true },
 	orderDate: { type: Date, default: Date.now },
 	assignedStaff: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: "Staff", // Reference to the Staff model
+		ref: "Staff", // reference to the Staff model
 		required: false, // Not required because an order might not be assigned initially
 	},
 });

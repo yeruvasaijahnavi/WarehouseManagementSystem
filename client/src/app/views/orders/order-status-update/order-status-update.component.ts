@@ -14,7 +14,7 @@ import { FormsModule } from "@angular/forms";
 export class OrderStatusUpdateComponent implements OnInit {
 	orderId: string | null = null;
 	status: string = "";
-	validStatuses = ["pending", "in progress", "shipped", "delivered"];
+	validStatuses = ["pending", "assigned", "shipped", "delivered"];
 	errorMessage: string = "";
 
 	orderService = inject(OrderService);

@@ -121,12 +121,7 @@ router.put("/:id/status", async (req, res) => {
 		const { status } = req.body;
 
 		// Validate status change
-		const validStatuses = [
-			"pending",
-			"in progress",
-			"shipped",
-			"delivered",
-		];
+		const validStatuses = ["pending", "assigned", "shipped", "delivered"];
 		if (!validStatuses.includes(status)) {
 			return res.status(400).json({ message: "Invalid order status" });
 		}
@@ -193,7 +188,7 @@ router.get("/:id/history", authorizeUser("staff"), async (req, res) => {
 
 // 		// Validate status change
 // 		if (
-// 			!["pending", "in progress", "shipped", "delivered"].includes(status)
+// 			!["pending", "assigned", "shipped", "delivered"].includes(status)
 // 		) {
 // 			return res.status(400).json({ message: "Invalid order status" });
 // 		}
