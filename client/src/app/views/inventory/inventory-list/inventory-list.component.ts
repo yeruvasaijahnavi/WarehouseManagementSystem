@@ -4,6 +4,7 @@ import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
 import { IconDirective } from "@coreui/icons-angular";
 import { TableModule, UtilitiesModule } from "@coreui/angular";
+import { AuthService } from "src/app/services/auth.service";
 @Component({
 	selector: "app-inventory-list",
 	imports: [CommonModule, TableModule, UtilitiesModule, IconDirective],
@@ -13,6 +14,7 @@ import { TableModule, UtilitiesModule } from "@coreui/angular";
 export class InventoryListComponent implements OnInit {
 	inventoryList: any[] = [];
 	inventoryService = inject(InventoryService);
+	authService = inject(AuthService);
 	router = inject(Router);
 	sku: string | undefined;
 	ngOnInit(): void {
@@ -36,8 +38,7 @@ export class InventoryListComponent implements OnInit {
 		console.log("Navigating to delete item with sku:", sku);
 		this.router.navigate([`/inventory/delete/${sku}`]);
 	}
-	isAdmin(): boolean {
-		const userRole = localStorage.getItem("role"); // Retrieve the role from localStorage
-		return userRole === "admin"; // Check if the role is admin
+	isRole(role: string): boolean {
+		return this.authService.hasRole(role);
 	}
 }

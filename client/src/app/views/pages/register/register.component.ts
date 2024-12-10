@@ -55,7 +55,7 @@ export class RegisterComponent {
 	router = inject(Router);
 
 	onSubmit() {
-		debugger;
+		// debugger;
 		this.authService.signup(this.registerObj).subscribe({
 			next: (response) => {
 				alert("Account created successfully!");

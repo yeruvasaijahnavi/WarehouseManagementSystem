@@ -31,4 +31,8 @@ export class AuthService {
 		}
 		return { username: "", role: "" };
 	}
+	hasRole(requiredRole: string): boolean {
+		const user = this.getUser();
+		return user.role === requiredRole;
+	}
 }
