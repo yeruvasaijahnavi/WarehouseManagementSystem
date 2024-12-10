@@ -1,7 +1,7 @@
+// User Schema
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-// User Schema
 const userSchema = new mongoose.Schema({
 	userId: { type: String, unique: true, required: true },
 	username: { type: String, unique: true, required: true },
@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
 	role: { type: String, required: true, enum: ["admin", "staff"] },
 	email: { type: String, required: true },
 	isActive: { type: Boolean, default: true },
+	staff: { type: mongoose.Schema.Types.ObjectId, ref: "Staff" }, // Reference to the Staff model
 });
 
 // Method to compare password hash with the provided password

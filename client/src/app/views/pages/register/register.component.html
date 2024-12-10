@@ -32,6 +32,20 @@
 								<div>{{ errorMessage }}</div>
 							</c-alert>
 
+							<!-- Name Input -->
+							<c-input-group class="mb-3">
+								<span cInputGroupText>
+									<svg cIcon name="cilUser"></svg>
+								</span>
+								<input
+									autoComplete="name"
+									cFormControl
+									[(ngModel)]="registerObj.name"
+									name="name"
+									placeholder="Full Name"
+								/>
+							</c-input-group>
+
 							<!-- Username Input -->
 							<c-input-group class="mb-3">
 								<span cInputGroupText>

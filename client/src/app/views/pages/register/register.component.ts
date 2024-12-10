@@ -47,6 +47,7 @@ export class RegisterComponent {
 		email: "",
 		password: "",
 		role: "",
+		name: "", // Add name field here
 	};
 
 	errorMessage: string = ""; // To store the error message
@@ -55,7 +56,6 @@ export class RegisterComponent {
 	router = inject(Router);
 
 	onSubmit() {
-		// debugger;
 		this.authService.signup(this.registerObj).subscribe({
 			next: (response) => {
 				alert("Account created successfully!");

@@ -1,10 +1,10 @@
 const express = require("express");
 const User = require("../models/User");
 const router = express.Router();
+const Staff = require("../models/Staff");
 
-// Register a new user
 router.post("/register", async (req, res) => {
-	const { username, password, email, role } = req.body;
+	const { username, password, email, role, name } = req.body;
 
 	try {
 		// Check if user already exists
@@ -20,6 +20,28 @@ router.post("/register", async (req, res) => {
 
 		const userId = generateUserId();
 
+		// Randomly assign staff role and shift if the user is a staff
+		let staff = null;
+		if (role === "staff") {
+			// Randomly assign role and shift
+			const staffRoles = ["operator", "packer"];
+			const staffShifts = ["Morning", "Evening", "Night"];
+
+			const staffRole =
+				staffRoles[Math.floor(Math.random() * staffRoles.length)];
+			const staffShift =
+				staffShifts[Math.floor(Math.random() * staffShifts.length)];
+
+			staff = new Staff({
+				staffId: `S${Math.floor(1000 + Math.random() * 9000)}`, // Random 4-digit staff ID
+				name: name,
+				role: staffRole,
+				email,
+				shift: staffShift,
+			});
+			await staff.save(); // Save the staff member
+		}
+
 		// Create a new user
 		const newUser = new User({
 			userId,
@@ -27,6 +49,7 @@ router.post("/register", async (req, res) => {
 			passwordHash: password,
 			email,
 			role,
+			staff: staff ? staff._id : null, // Link staff if created
 		});
 		await newUser.save();
 
