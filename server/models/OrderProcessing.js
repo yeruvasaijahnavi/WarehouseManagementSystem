@@ -7,18 +7,7 @@ const orderProcessingSchema = new mongoose.Schema({
 		ref: "Order",
 		required: true,
 	},
-	status: {
-		type: String,
-		enum: [
-			"received",
-			"assigned",
-			"packed",
-			"shipped",
-			"delivered",
-			"canceled",
-		],
-		default: "received",
-	},
+
 	startDate: {
 		type: Date,
 		required: true,

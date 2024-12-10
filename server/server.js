@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/auth");
 const inventoryRoutes = require("./routes/inventory");
 const orderRoutes = require("./routes/orders");
+const orderProcessingRoutes = require("./routes/orderProcessing");
 const alertRoutes = require("./routes/alerts"); // Add alert routes
 const staffRoutes = require("./routes/staff");
 const logRoutes = require("./routes/logs"); // Add log routes
@@ -22,6 +23,7 @@ mongoose
 app.use("/auth", authRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/orders", orderRoutes);
+app.use("/orderProcessing", orderProcessingRoutes);
 app.use("/alerts", alertRoutes); // Add alert routes
 app.use("/staff", staffRoutes);
 app.use("/logs", logRoutes); // Add log routes

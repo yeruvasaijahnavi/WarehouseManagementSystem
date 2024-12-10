@@ -29,6 +29,7 @@ router.put("/:orderId/assign-staff", async (req, res) => {
 	}
 });
 
+// create new order
 router.post("/", authorizeUser("admin"), async (req, res) => {
 	try {
 		const { customerId, sku, quantity, shippingAddress } = req.body;
@@ -53,7 +54,6 @@ router.post("/", authorizeUser("admin"), async (req, res) => {
 		// // Create initial order processing entry
 		const newOrderProcessing = new OrderProcessing({
 			orderId: newOrder._id,
-			status: "received", // Initial status
 		});
 
 		await newOrderProcessing.save();
@@ -157,7 +157,7 @@ router.put("/:id/status", async (req, res) => {
 });
 
 // Get the processing history of an order (GET /orders/:id/history)
-router.get("/:id/history", authorizeUser("staff"), async (req, res) => {
+router.get("/:id/history", async (req, res) => {
 	try {
 		const orderProcessingHistory = await OrderProcessing.find({
 			orderId: req.params.id,
