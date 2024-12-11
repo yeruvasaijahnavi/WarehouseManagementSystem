@@ -1,1 +1,16 @@
-<p>staff-view works!</p>
+<div class="container">
+	<h2 class="my-4">Staff Details</h2>
+
+	<div *ngIf="staff" class="mb-4">
+		<h4>Staff ID: {{ staff.staffId }}</h4>
+		<p><strong>Name:</strong> {{ staff.name }}</p>
+		<p><strong>Email:</strong> {{ staff.email }}</p>
+		<p><strong>Role:</strong> {{ staff.role }}</p>
+		<p><strong>Shift:</strong> {{ staff.shift }}</p>
+		<p><strong>Status:</strong> {{ staff.status }}</p>
+	</div>
+
+	<div *ngIf="!staff">
+		<p>Loading staff details...</p>
+	</div>
+</div>

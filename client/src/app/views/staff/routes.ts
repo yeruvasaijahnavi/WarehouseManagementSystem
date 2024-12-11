@@ -11,4 +11,14 @@ export const routes: Routes = [
 			title: "Staff List",
 		},
 	},
+	{
+		path: "view/:id",
+		loadComponent: () =>
+			import("./staff-view/staff-view.component").then(
+				(m) => m.StaffViewComponent
+			),
+		data: {
+			title: "Staff View",
+		},
+	},
 ];

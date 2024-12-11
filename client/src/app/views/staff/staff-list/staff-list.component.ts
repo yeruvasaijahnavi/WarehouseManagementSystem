@@ -31,6 +31,6 @@ export class StaffListComponent implements OnInit {
 	}
 
 	viewStaffDetails(staffId: string) {
-		this.router.navigate(["/staff/details", staffId]);
+		this.router.navigate(["/staff/view", staffId]);
 	}
 }
