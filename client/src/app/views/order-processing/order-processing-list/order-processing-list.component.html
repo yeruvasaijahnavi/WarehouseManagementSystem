@@ -17,7 +17,7 @@
 		</thead>
 		<tbody>
 			<tr
-				*ngFor="let orderProcessing of orderProcessings"
+				*ngFor="let orderProcessing of filteredOrderProcessings"
 				class="table-row-hover"
 			>
 				<td>P{{ orderProcessing._id?.slice(-3) }}</td>

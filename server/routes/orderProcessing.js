@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 				select: "orderId status", // Select the orderId and status fields from Order model
 				populate: {
 					path: "assignedStaff", // Populate the assignedStaff field inside Order model
-					select: "name", // Select the username from the Staff model
+					select: "name email", // Select the username from the Staff model
 				},
 			})
 			.sort({ startDate: 1 }); // Optional: Sort by start date to view in chronological order
