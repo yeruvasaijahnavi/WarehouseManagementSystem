@@ -1,4 +1,4 @@
-<c-row class="my-4">
+<c-row class="my-4" *ngIf="this.authService.hasRole('admin')">
 	<c-col xl="6" lg="6" md="6" sm="12" class="margin-class">
 		<c-widget-stat-f
 			[title]="'Total Orders'"
@@ -26,17 +26,19 @@
 		</c-widget-stat-f>
 	</c-col>
 </c-row>
-<div *ngIf="isPieChartDataLoaded; else loadingTemplate">
-	<h3 class="inline mx-auto">Order Status</h3>
-	<c-chart
-		[data]="pieChartData"
-		class="w-50 mx-auto"
-		type="doughnut"
-	></c-chart>
-</div>
-<ng-template #loadingTemplate>
-	<div class="text-center">
-		<p>Loading chart...</p>
-		<!-- <c-spinner color="primary" size="lg"></c-spinner> -->
+<div *ngIf="this.authService.hasRole('admin')">
+	<div *ngIf="isPieChartDataLoaded; else loadingTemplate">
+		<h3 class="inline mx-auto">Order Status</h3>
+		<c-chart
+			[data]="pieChartData"
+			class="w-50 mx-auto"
+			type="doughnut"
+		></c-chart>
 	</div>
-</ng-template>
+	<ng-template #loadingTemplate>
+		<div class="text-center">
+			<p>Loading chart...</p>
+			<!-- <c-spinner color="primary" size="lg"></c-spinner> -->
+		</div>
+	</ng-template>
+</div>

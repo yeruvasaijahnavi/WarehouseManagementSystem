@@ -20,7 +20,7 @@ import { AuthService } from "src/app/services/auth.service"; // Import the AuthS
 })
 export class OrderListComponent implements OnInit {
 	orderList: any[] = [];
-	filteredOrderList: any[] = [];
+	public filteredOrderList: any[] = [];
 	orderService = inject(OrderService);
 	router = inject(Router);
 	authService = inject(AuthService); // Inject the AuthService

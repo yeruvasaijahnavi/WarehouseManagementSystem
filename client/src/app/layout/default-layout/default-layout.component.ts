@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { RouterLink, RouterOutlet } from "@angular/router";
 import { NgScrollbar } from "ngx-scrollbar";
 
@@ -17,6 +17,7 @@ import {
 
 import { DefaultFooterComponent, DefaultHeaderComponent } from "./";
 import { navItems } from "./_nav";
+import { AuthService } from "src/app/services/auth.service";
 
 function isOverflown(element: HTMLElement) {
 	return (
@@ -49,9 +50,39 @@ function isOverflown(element: HTMLElement) {
 export class DefaultLayoutComponent {
 	public navItems = navItems;
 
+	constructor() {}
+	authService = inject(AuthService);
+	ngOnInit(): void {
+		this.filterNavItems();
+	}
+
+	// Method to check the user role and filter out the 'Staff' item
+	filterNavItems() {
+		const userRole = this.getUserRole(); // Get the current user's role
+		const itemsToHide = [
+			"Staff",
+			"Audit Logs",
+			"Dashboard",
+			"Inventory Report",
+		]; // Array of items to hide for 'staff' role
+
+		if (userRole === "staff") {
+			// Filter out items listed in itemsToHide
+			this.navItems = this.navItems.filter(
+				(item) => item.name && !itemsToHide.includes(item.name)
+			);
+		}
+	}
+
+	// Example function to get the user role (replace this with your actual logic)
+	getUserRole(): string {
+		return this.authService.getUser().role;
+	}
+
 	onScrollbarUpdate($event: any) {
+		// Uncomment and implement if needed
 		// if ($event.verticalUsed) {
-		// console.log('verticalUsed', $event.verticalUsed);
+		//   console.log('verticalUsed', $event.verticalUsed);
 		// }
 	}
 }

@@ -112,18 +112,22 @@ router.get(
 );
 
 // stocks unresolved
-router.get("/alerts-unresolved", authorizeUser(["admin"]), async (req, res) => {
-	try {
-		const unresolvedCount = await StockAlert.countDocuments({
-			status: "active",
-		});
-		res.json({ unresolvedCount });
-	} catch (err) {
-		console.error(err);
-		res.status(500).json({
-			message: "Internal Server Error",
-			error: err.message,
-		});
+router.get(
+	"/alerts-unresolved",
+	authorizeUser(["admin", "staff"]),
+	async (req, res) => {
+		try {
+			const unresolvedCount = await StockAlert.countDocuments({
+				status: "active",
+			});
+			res.json({ unresolvedCount });
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({
+				message: "Internal Server Error",
+				error: err.message,
+			});
+		}
 	}
-});
+);
 module.exports = router;

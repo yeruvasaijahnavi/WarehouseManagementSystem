@@ -1,8 +1,9 @@
 import { OrderDashboardService } from "../../../services/orders-dashboard.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { IconModule } from "@coreui/icons-angular";
 import { ChartjsModule } from "@coreui/angular-chartjs";
+
 import {
 	ColComponent,
 	DropdownModule,
@@ -13,6 +14,7 @@ import {
 	WidgetModule,
 } from "@coreui/angular";
 import { CommonModule } from "@angular/common";
+import { AuthService } from "src/app/services/auth.service";
 
 @Component({
 	selector: "app-order-dashboard",
@@ -54,7 +56,7 @@ export class OrdersDashboardComponent implements OnInit {
 		],
 	};
 	isPieChartDataLoaded: boolean = false;
-
+	authService = inject(AuthService);
 	constructor(private orderDashboardService: OrderDashboardService) {}
 
 	ngOnInit(): void {
