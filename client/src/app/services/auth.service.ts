@@ -16,7 +16,9 @@ export class AuthService {
 		return this.http.post<any>(`${this.baseUrl}/login`, data);
 	}
 	logout() {
+		console.log("Token before logout:", localStorage.getItem("token"));
 		localStorage.removeItem("token");
+		console.log("Token after logout:", localStorage.getItem("token"));
 	}
 	isLoggedIn() {
 		return localStorage.getItem("token") !== null;
@@ -26,7 +28,7 @@ export class AuthService {
 		const token = localStorage.getItem("token");
 		if (token) {
 			const decodedToken = JSON.parse(atob(token.split(".")[1])); // Decoding JWT
-			console.log(decodedToken);
+			// console.log(decodedToken);
 			return {
 				username: decodedToken.username,
 				role: decodedToken.role,

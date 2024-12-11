@@ -76,16 +76,10 @@
 			/>
 		</button>
 		<ul cDropdownMenu class="pt-0 w-auto">
-			<li>
-				<a cDropdownItem routerLink="">
-					<svg
-						cIcon
-						class="me-2"
-						*ngIf="user"
-						(click)="logout()"
-						name="cilAccountLogout"
-					></svg>
-					Logout
+			<li class="p-2">
+				<a *ngIf="user" (click)="logout()">
+					<svg cIcon class="me-2" name="cilAccountLogout"></svg>
+					Logoutt
 				</a>
 			</li>
 		</ul>

@@ -65,6 +65,7 @@ export class LoginComponent {
 
 					const user = this.authService.getUser();
 					console.log("login user:", user);
+					// localStorage.setItem("user", user);
 					localStorage.setItem("role", user.role);
 
 					this.router.navigate(["/inventory"]);

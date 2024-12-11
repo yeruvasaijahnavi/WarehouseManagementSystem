@@ -193,11 +193,24 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
 	ngOnInit(): void {
 		this.user = this.authService.getUser(); // Fetch user data from AuthService
+		console.log("tado!");
 	}
 	router = inject(Router);
 	logout() {
 		console.log("Logout button clicked");
-		this.authService.logout(); // Assuming this method handles the logout
-		this.router.navigate(["/login"]);
+
+		const tokenBefore = localStorage.getItem("token");
+		console.log("Token before logout:", tokenBefore);
+
+		this.authService.logout();
+
+		const tokenAfter = localStorage.getItem("token");
+		console.log("Token after logout:", tokenAfter);
+
+		setTimeout(() => {
+			this.router.navigate(["/login"]).then(() => {
+				console.log("Navigation to login complete");
+			});
+		}, 100);
 	}
 }
