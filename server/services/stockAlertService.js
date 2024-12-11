@@ -49,7 +49,12 @@ const checkLowStock = async (item) => {
 			});
 			await alert.save();
 			console.log(`Low stock alert created for item: ${item.name}`);
-			// }
+			// Send email notification
+			await sendEmail(
+				"yeruvasaijahnavi@gmail.com", // Replace with recipient's email
+				"Low Stock Alert",
+				`The item '${item.name}' is low in stock. Current quantity: ${item.quantity}.`
+			);
 		}
 	} catch (err) {
 		console.error("Error creating low stock alert:", err);
