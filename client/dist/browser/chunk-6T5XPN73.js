@@ -1,0 +1,1 @@
+import"./chunk-JKOY2XUY.js";var e=[{path:"",loadComponent:()=>import("./chunk-VKGALTPD.js").then(o=>o.OrderProcessingListComponent),data:{title:"Order Processing"}},{path:"view/:id",loadComponent:()=>import("./chunk-AF4PFTXZ.js").then(o=>o.OrderProcessingViewComponent)}];export{e as routes};
