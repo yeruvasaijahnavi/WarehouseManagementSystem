@@ -56,7 +56,7 @@ export const routes: Routes = [
 	{
 		path: "404",
 		loadComponent: () =>
-			import("./views/pages/page404/page404.component").then(
+			import("./views/auth/page404/page404.component").then(
 				(m) => m.Page404Component
 			),
 		data: {
@@ -66,7 +66,7 @@ export const routes: Routes = [
 	{
 		path: "500",
 		loadComponent: () =>
-			import("./views/pages/page500/page500.component").then(
+			import("./views/auth/page500/page500.component").then(
 				(m) => m.Page500Component
 			),
 		data: {
@@ -76,7 +76,7 @@ export const routes: Routes = [
 	{
 		path: "login",
 		loadComponent: () =>
-			import("./views/pages/login/login.component").then(
+			import("./views/auth/login/login.component").then(
 				(m) => m.LoginComponent
 			),
 		data: {
@@ -86,12 +86,12 @@ export const routes: Routes = [
 	{
 		path: "register",
 		loadComponent: () =>
-			import("./views/pages/register/register.component").then(
+			import("./views/auth/register/register.component").then(
 				(m) => m.RegisterComponent
 			),
 		data: {
 			title: "Register Page",
 		},
 	},
-	{ path: "**", redirectTo: "dashboard" },
+	{ path: "**", redirectTo: "login" },
 ];
