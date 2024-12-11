@@ -90,9 +90,9 @@ router.post("/login", async (req, res) => {
 			process.env.JWT_SECRET,
 			{ expiresIn: "1d" }
 		);
-		// Assuming you are decoding the token somewhere in your backend
+
 		const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-		console.log("Backend:", decodedToken); // This should include username, userId, role, etc.
+		console.log("Backend:", decodedToken);
 
 		res.status(200).json({ token });
 	} catch (err) {
