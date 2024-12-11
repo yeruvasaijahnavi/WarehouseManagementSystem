@@ -51,7 +51,8 @@ const checkLowStock = async (item) => {
 			console.log(`Low stock alert created for item: ${item.name}`);
 			// Send email notification
 			await sendEmail(
-				"yeruvasaijahnavi@gmail.com",
+				// "yeruvasaijahnavi@gmail.com",
+				"kundetividya.latha2021@vitstudent.ac.in",
 				"Low Stock Alert",
 				`The item '${item.name}' is low in stock. Current quantity: ${item.quantity}.`
 			);
