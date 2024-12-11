@@ -16,6 +16,8 @@
 				<th scope="col">Order ID</th>
 				<th scope="col">Customer ID</th>
 				<th scope="col">SKU</th>
+				<th scope="col">Item Name</th>
+				<!-- New column for Item Name -->
 				<th scope="col">Quantity</th>
 				<th scope="col">Status</th>
 				<th scope="col">Shipping Address</th>
@@ -28,7 +30,10 @@
 			<tr *ngFor="let order of filteredOrderList" class="table-row-hover">
 				<td>{{ order.orderId }}</td>
 				<td>{{ order.customerId }}</td>
-				<td>{{ order.sku }}</td>
+				<td>{{ order.inventoryItem?.sku }}</td>
+				<!-- Display SKU -->
+				<td>{{ order.inventoryItem?.name }}</td>
+				<!-- Display Item Name -->
 				<td>{{ order.quantity }}</td>
 				<td>{{ order.status }}</td>
 				<td>{{ order.shippingAddress }}</td>

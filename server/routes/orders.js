@@ -91,7 +91,7 @@ router.get("/", async (req, res) => {
 	try {
 		const orders = await Order.find()
 			.populate("assignedStaff", "name role email")
-			.populate("inventoryItem", "name category description");
+			.populate("inventoryItem", "name sku category description");
 		res.status(200).json(orders);
 	} catch (err) {
 		console.error(err);
