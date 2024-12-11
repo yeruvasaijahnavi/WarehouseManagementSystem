@@ -1,0 +1,1 @@
+import"./chunk-4CLCTAJ7.js";var o=[{path:"",loadComponent:()=>import("./chunk-K5Q5LPSJ.js").then(t=>t.StaffListComponent),data:{title:"Staff List"}},{path:"view/:id",loadComponent:()=>import("./chunk-N3KUNYPX.js").then(t=>t.StaffViewComponent),data:{title:"Staff View"}}];export{o as routes};
