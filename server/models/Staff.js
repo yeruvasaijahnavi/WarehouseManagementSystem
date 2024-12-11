@@ -10,7 +10,7 @@ const staffSchema = new mongoose.Schema(
 			enum: ["operator", "packer"],
 		},
 		email: { type: String, required: true, unique: true },
-		shift: { type: String, required: true }, // e.g., "Morning", "Evening", "Night"
+		shift: { type: String, required: true },
 		status: {
 			type: String,
 			required: true,

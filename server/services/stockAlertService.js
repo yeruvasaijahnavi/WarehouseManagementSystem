@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 	secure: false,
 	auth: {
 		user: process.env.USER_EMAIL,
-		pass: process.env.USER_PASS, // Replace with an app-specific password if needed
+		pass: process.env.USER_PASS,
 	},
 });
 
@@ -51,7 +51,7 @@ const checkLowStock = async (item) => {
 			console.log(`Low stock alert created for item: ${item.name}`);
 			// Send email notification
 			await sendEmail(
-				"yeruvasaijahnavi@gmail.com", // Replace with recipient's email
+				"yeruvasaijahnavi@gmail.com",
 				"Low Stock Alert",
 				`The item '${item.name}' is low in stock. Current quantity: ${item.quantity}.`
 			);
