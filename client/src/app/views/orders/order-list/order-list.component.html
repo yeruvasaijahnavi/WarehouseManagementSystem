@@ -3,6 +3,7 @@
 		<h2 class="mb-0">Order List</h2>
 		<button
 			class="btn btn-primary"
+			*ngIf="isRole('admin')"
 			(click)="router.navigate(['/orders/add'])"
 		>
 			Add Order
