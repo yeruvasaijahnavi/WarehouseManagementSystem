@@ -1,10 +1,11 @@
 const express = require("express");
 const Order = require("../models/Order");
 const OrderProcessing = require("../models/OrderProcessing");
+const Inventory = require("../models/Inventory");
 const { createLog } = require("../services/logService");
 const authorizeUser = require("../middleware/auth");
 const router = express.Router();
-
+const { checkLowStock } = require("../services/stockAlertService");
 // Assign staff to an order (PUT /orders/:orderId/assign-staff)
 router.put("/:orderId/assign-staff", async (req, res) => {
 	try {
@@ -25,6 +26,14 @@ router.put("/:orderId/assign-staff", async (req, res) => {
 		if (!order) {
 			return res.status(404).json({ message: "Order not found" });
 		}
+
+		await createLog(
+			"Assigned",
+			"Order",
+			order._id,
+			staffId,
+			`Assigned order: ${orderId} to staff: ${staffId}`
+		);
 
 		res.status(200).json(order);
 	} catch (err) {
@@ -150,11 +159,20 @@ router.put(
 			if (!order) {
 				return res.status(404).json({ message: "Order not found" });
 			}
+			console.log(order);
+			const inventoryItem = await Inventory.findById(order.inventoryItem);
+			console.log("item", inventoryItem);
+			if (order.status === "assigned" && status === "packed") {
+				// decrement the number items
 
+				inventoryItem.quantity -= order.quantity;
+				await inventoryItem.save();
+			}
 			// Update the order status
 			order.status = status;
 			await order.save();
-
+			// check for low stock
+			await checkLowStock(inventoryItem);
 			// Create an audit log for updating order status
 			await createLog(
 				"update",
