@@ -57,4 +57,8 @@ export class OrderListComponent implements OnInit {
 	assignStaff(orderId: string): void {
 		this.router.navigate([`/orders/assign-staff/${orderId}`]);
 	}
+
+	isRole(role: string): boolean {
+		return this.authService.hasRole(role);
+	}
 }

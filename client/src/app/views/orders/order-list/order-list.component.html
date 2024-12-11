@@ -61,6 +61,7 @@
 							<svg cIcon name="cil-pencil"></svg>
 						</span>
 						<span
+							*ngIf="isRole('admin')"
 							class="text-primary"
 							title="Assign Staff"
 							(click)="assignStaff(order.orderId)"
