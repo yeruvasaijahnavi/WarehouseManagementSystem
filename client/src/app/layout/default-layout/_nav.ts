@@ -29,7 +29,7 @@ export const navItems: INavData[] = [
 	{
 		name: "Orders Processing",
 		url: "/order-processing",
-		iconComponent: { name: "cil-basket" },
+		iconComponent: { name: "cil-loop-circular" },
 	},
 	{
 		name: "Staff",
