@@ -11,18 +11,29 @@
 				required
 			/>
 			<label for="customerId">Customer ID</label>
+			<small *ngIf="order.customerId" class="text-muted"
+				>Customer ID entered: {{ order.customerId }}</small
+			>
 		</div>
 
 		<div class="col-md-6 form-floating">
-			<input
+			<select
 				id="sku"
-				type="text"
-				class="form-control"
+				class="form-select"
 				[(ngModel)]="order.sku"
 				name="sku"
+				(change)="onSKUChange(order.sku)"
 				required
-			/>
+			>
+				<option value="" disabled selected>Select SKU</option>
+				<option *ngFor="let item of inventoryItems" [value]="item.sku">
+					{{ item.sku }} - {{ item.name }}
+				</option>
+			</select>
 			<label for="sku">SKU</label>
+			<small *ngIf="order.sku" class="text-muted"
+				>SKU selected: {{ order.sku }}</small
+			>
 		</div>
 
 		<div class="col-md-4 form-floating">
@@ -36,6 +47,9 @@
 				required
 			/>
 			<label for="quantity">Quantity</label>
+			<small *ngIf="order.quantity" class="text-muted"
+				>Quantity entered: {{ order.quantity }}</small
+			>
 		</div>
 
 		<div class="col-md-4 form-floating">
@@ -52,6 +66,9 @@
 				<option value="delivered">Delivered</option>
 			</select>
 			<label for="status">Status</label>
+			<small *ngIf="order.status" class="text-muted"
+				>Status selected: {{ order.status }}</small
+			>
 		</div>
 
 		<div class="col-md-4 form-floating">
@@ -64,6 +81,9 @@
 				required
 			/>
 			<label for="shippingAddress">Shipping Address</label>
+			<small *ngIf="order.shippingAddress" class="text-muted"
+				>Shipping Address entered: {{ order.shippingAddress }}</small
+			>
 		</div>
 
 		<div class="col-12">
