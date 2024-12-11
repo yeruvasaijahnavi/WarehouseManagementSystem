@@ -9,6 +9,18 @@
 		<p><strong>Status:</strong> {{ order.status }}</p>
 	</div>
 
+	<!-- Checkbox to start countdown -->
+	<div class="form-check">
+		<input
+			type="checkbox"
+			class="form-check-input"
+			id="startProgressCheckbox"
+			[(ngModel)]="startCountdown"
+			(change)="onCheckboxChange()"
+		/>
+		<label class="form-check-label" for="startProgressCheckbox"> </label>
+	</div>
+
 	<h4>Order Progress</h4>
 	<c-progress-stacked>
 		<c-progress
@@ -16,7 +28,7 @@
 			[value]="progressValue"
 			color="success"
 			variant="striped"
-			>{{ order.status }}</c-progress
+			>{{ currStatus }}</c-progress
 		>
 	</c-progress-stacked>
 
