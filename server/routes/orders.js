@@ -4,8 +4,8 @@ const OrderProcessing = require("../models/OrderProcessing");
 const { createLog } = require("../services/logService");
 const authorizeUser = require("../middleware/auth");
 const router = express.Router();
-const mongoose = require("mongoose");
 
+// Assign staff to an order (PUT /orders/:orderId/assign-staff)
 router.put("/:orderId/assign-staff", async (req, res) => {
 	try {
 		const { staffId } = req.body;
@@ -13,45 +13,51 @@ router.put("/:orderId/assign-staff", async (req, res) => {
 		if (!orderId) {
 			return res.status(400).json({ message: "Order ID is missing" });
 		}
-		console.log("Assignings staff", staffId, req.params.orderId);
+
 		const order = await Order.findOneAndUpdate(
-			{ orderId: req.params.orderId },
-			{ assignedStaff: staffId },
-			{ status: "assigned" },
+			{ orderId },
+			{ assignedStaff: staffId, status: "assigned" },
 			{ new: true }
-		).populate("assignedStaff", "name role username");
+		)
+			.populate("assignedStaff", "name role username")
+			.populate("inventoryItem", "name category description");
+
+		if (!order) {
+			return res.status(404).json({ message: "Order not found" });
+		}
+
 		res.status(200).json(order);
 	} catch (err) {
 		console.error(err);
-		res.status(500).json({
-			message: err.message,
-		});
+		res.status(500).json({ message: err.message });
 	}
 });
 
-// create new order
+// Create a new order (POST /orders)
 router.post("/", authorizeUser(["admin"]), async (req, res) => {
 	try {
-		const { customerId, sku, quantity, shippingAddress } = req.body;
+		const { customerId, inventoryItemId, quantity, shippingAddress } =
+			req.body;
 
 		const generateOrderId = () => {
-			const randomDigits = Math.floor(100 + Math.random() * 900); // Generates a random 3 digit number
+			const randomDigits = Math.floor(100 + Math.random() * 900); // Generates a random 3-digit number
 			return `O${randomDigits}`;
 		};
 
 		const orderId = generateOrderId();
+
 		// Create a new order
 		const newOrder = new Order({
 			orderId,
 			customerId,
-			sku,
+			inventoryItem: inventoryItemId,
 			quantity,
 			shippingAddress,
 		});
 
 		await newOrder.save();
 
-		// // Create initial order processing entry
+		// Create initial order processing entry
 		const newOrderProcessing = new OrderProcessing({
 			orderId: newOrder._id,
 		});
@@ -83,10 +89,9 @@ router.post("/", authorizeUser(["admin"]), async (req, res) => {
 // Get all orders (GET /orders)
 router.get("/", async (req, res) => {
 	try {
-		const orders = await Order.find().populate(
-			"assignedStaff",
-			"name role email"
-		);
+		const orders = await Order.find()
+			.populate("assignedStaff", "name role email")
+			.populate("inventoryItem", "name category description");
 		res.status(200).json(orders);
 	} catch (err) {
 		console.error(err);
@@ -100,7 +105,10 @@ router.get("/", async (req, res) => {
 // Get an order by ID (GET /orders/:id)
 router.get("/:id", async (req, res) => {
 	try {
-		const order = await Order.findOne({ orderId: req.params.id });
+		const order = await Order.findOne({ orderId: req.params.id })
+			.populate("assignedStaff", "name role email")
+			.populate("inventoryItem", "name category description");
+
 		if (!order) {
 			return res.status(404).json({ message: "Order not found" });
 		}
@@ -116,7 +124,6 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update the status of an order (PUT /orders/:id/status)
-// router.put("/:id/status", authorizeUser(["staff"]), async (req, res) => {
 router.put(
 	"/:id/status",
 	authorizeUser(["admin", "staff"]),
@@ -147,7 +154,7 @@ router.put(
 			// Update the order status
 			order.status = status;
 			await order.save();
-			console.log("curr user:", req.user);
+
 			// Create an audit log for updating order status
 			await createLog(
 				"update",
@@ -170,49 +177,6 @@ router.put(
 		}
 	}
 );
-
-// // Update the status of an order (PUT /orders/:id)
-// router.put("/:id", authorizeUser(["staff"]), async (req, res) => {
-// 	try {
-// 		const { status } = req.body;
-
-// 		// Validate status change
-// 		if (
-// 			!["pending", "assigned", "shipped", "delivered"].includes(status)
-// 		) {
-// 			return res.status(400).json({ message: "Invalid order status" });
-// 		}
-
-// 		const updatedOrder = await Order.findOneAndUpdate(
-// 			{ orderId: req.params.id },
-// 			{ status },
-// 			{ new: true }
-// 		);
-
-// 		if (!updatedOrder) {
-// 			return res.status(404).json({ message: "Order not found" });
-// 		}
-
-// 		// Create an audit log for updating order status
-// 		await createLog(
-// 			"update",
-// 			updatedOrder._id,
-// 			req.user.userId,
-// 			`Updated status of order ID: ${req.params.id} to ${status}`
-// 		);
-
-// 		res.status(200).json({
-// 			message: "Order status updated",
-// 			order: updatedOrder,
-// 		});
-// 	} catch (err) {
-// 		console.error(err);
-// 		res.status(500).json({
-// 			message: "Internal Server Error",
-// 			error: err.message,
-// 		});
-// 	}
-// });
 
 // Delete an order (DELETE /orders/:id)
 router.delete("/:id", authorizeUser(["admin"]), async (req, res) => {

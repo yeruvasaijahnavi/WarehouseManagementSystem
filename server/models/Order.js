@@ -4,7 +4,11 @@ const mongoose = require("mongoose");
 const orderSchema = new mongoose.Schema({
 	orderId: { type: String, unique: true, required: true },
 	customerId: { type: String, required: true },
-	sku: { type: String, required: true },
+	inventoryItem: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Inventory", // Reference to the Inventory model
+		required: true, // Orders must have an associated inventory item
+	},
 	quantity: { type: Number, required: true },
 	status: {
 		type: String,
@@ -23,7 +27,7 @@ const orderSchema = new mongoose.Schema({
 	orderDate: { type: Date, default: Date.now },
 	assignedStaff: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: "Staff", // reference to the Staff model
+		ref: "Staff", // Reference to the Staff model
 		required: false, // Not required because an order might not be assigned initially
 	},
 });
