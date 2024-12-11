@@ -65,11 +65,19 @@ export class OrderProcessingViewComponent {
 		return this.progressValue;
 	}
 
+	updateCurrentStatus(): void {
+		const statusIndex = Math.floor(
+			(this.progressValue / 100) * (this.statuses.length - 1)
+		);
+		this.currStatus = this.statuses[statusIndex];
+	}
+
 	startProgressUpdate(): void {
 		// Start a countdown every 5 seconds
 		this.intervalId = setInterval(() => {
 			if (this.progressValue < 100) {
-				this.progressValue += 20; // Increment by 10 every 5 seconds
+				this.progressValue += 20; // Increment by 20 every 5 seconds
+				this.updateCurrentStatus(); // Update the current status based on the progress
 			} else {
 				clearInterval(this.intervalId); // Stop the countdown once it reaches 100
 			}
@@ -87,6 +95,7 @@ export class OrderProcessingViewComponent {
 	resetProgress(): void {
 		// Reset the progress value if the checkbox is unchecked
 		this.progressValue = 0;
+		this.currStatus = this.statuses[0]; // Reset status to 'pending'
 		if (this.intervalId) {
 			clearInterval(this.intervalId);
 		}
