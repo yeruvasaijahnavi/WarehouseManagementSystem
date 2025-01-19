@@ -37,6 +37,12 @@ app.get("/", (req, res) => {
 	res.send("Warehouse Management System Backend is Running! rm cors");
 });
 
+// Example middleware for logging errors
+app.use((err, req, res, next) => {
+	console.error(err.stack); // Log the error to the console
+	res.status(500).send("Internal Server Error");
+});
+
 // app.listen(3000, () => {
 // 	console.log(`Server is running on port 3000`);
 // });
