@@ -8,6 +8,8 @@ const alertRoutes = require("./routes/alerts"); // Add alert routes
 const staffRoutes = require("./routes/staff");
 const logRoutes = require("./routes/logs"); // Add log routes
 const dashboardRoutes = require("./routes/dashboard"); // Add log routes
+require("dotenv").config();
+
 const cors = require("cors");
 
 const app = express();
@@ -36,3 +38,5 @@ app.get("/", (req, res) => {
 app.listen(process.env.PORT, () => {
 	console.log(`Server is running on port ${process.env.PORT}`);
 });
+
+module.exports = app;
