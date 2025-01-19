@@ -8,7 +8,7 @@ const alertRoutes = require("./routes/alerts"); // Add alert routes
 const staffRoutes = require("./routes/staff");
 const logRoutes = require("./routes/logs"); // Add log routes
 const dashboardRoutes = require("./routes/dashboard"); // Add log routes
-require("dotenv").config();
+// require("dotenv").config();
 
 const cors = require("cors");
 
@@ -17,7 +17,9 @@ app.use(express.json()); // Middleware to parse JSON
 app.use(cors());
 // Connect to MongoDB
 mongoose
-	.connect(process.env.MONGO_URI)
+	.connect(
+		"mongodb+srv://yeruvasaijahnavi:DQiNH5gMYA7nfdpH@cluster0.i4dvm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+	)
 	.then(() => console.log("Connected to MongoDB"))
 	.catch((err) => console.error("MongoDB connection error:", err));
 
@@ -35,8 +37,8 @@ app.get("/", (req, res) => {
 	res.send("Warehouse Management System Backend is Running! rm cors");
 });
 
-app.listen(process.env.PORT, () => {
-	console.log(`Server is running on port ${process.env.PORT}`);
-});
+// app.listen(3000, () => {
+// 	console.log(`Server is running on port 3000`);
+// });
 
 module.exports = app;

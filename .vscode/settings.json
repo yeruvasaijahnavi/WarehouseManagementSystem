@@ -1,0 +1,4 @@
+{
+	"appService.defaultWebAppToDeploy": "/subscriptions/d01b3485-cc5a-4096-a648-e26890c16d89/resourceGroups/chb_warehouse/providers/Microsoft.Web/sites/chb-warehouse-server",
+	"appService.deploySubpath": "server"
+}
